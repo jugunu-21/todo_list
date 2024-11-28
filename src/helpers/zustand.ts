@@ -1,11 +1,11 @@
 "use client"
 import { create } from 'zustand';
-import getUserSession from "./get-current-user";
+import getSessionUser from "./session-user/get-session-user";
 interface Iuser {
     username: string
     password: string
 }
-const usersession = getUserSession()
+const usersession = getSessionUser()
 interface IuseUser {
     currentUser: Iuser | null;
     setCurrentUser: (user: Iuser) => void;

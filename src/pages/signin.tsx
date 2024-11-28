@@ -2,51 +2,33 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCurrentUser } from '../helpers/zustand';
+import setUsers from '../helpers/user/set-users';
+import setSessionUser from '../helpers/session-user/set-session-user';
 const SignIn: React.FC = () => {
     const navigate = useNavigate();
     const { setCurrentUser } = useCurrentUser();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-    interface User {
-        username: string;
-        password: string;
-    }
-    function getUsers() {
-        return localStorage.getItem('users')
-    }
-    const handleSignInSubmit = (e: React.FormEvent) => {
+    const handleSignInSubmit = async (e: React.FormEvent) => {
         try {
             e.preventDefault();
             const user = {
                 username: username,
                 password: password
             }
-            const users = getUsers();
-            if (users !== null) {
-                const parsedUsers = JSON.parse(users)
-                if (!parsedUsers.find((usermap: User) => usermap.username === username && usermap.password === password)) {
-                    console.log(" add use")
-                    parsedUsers.push(user);
-                    localStorage.setItem('users', JSON.stringify(parsedUsers));
-                }
-            }
-            else {
-                localStorage.setItem('users', JSON.stringify([user]));
-            }
-            localStorage.setItem("currentUser", JSON.stringify(user))
+
+            setUsers(user)
+            setSessionUser(user)
+            setCurrentUser(user);
             setUsername('');
             setPassword('');
-            console.log('update')
-            setCurrentUser(user);
-            navigate('/')
-            console.log('navigate')
 
+            navigate('/')
         }
         catch (err) {
             return err
         }
-
     };
 
     return (

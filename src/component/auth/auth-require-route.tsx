@@ -1,6 +1,6 @@
 
 import { useCurrentUser } from '../../helpers/zustand';
-import getUserSession from '../../helpers/get-current-user';
+import getUserSession from '../../helpers/session-user/get-session-user';
 import { Navigate } from 'react-router-dom';
 export function SignedInRequireRoute({ children }: { children: React.ReactNode }) {
     const { currentUser } = useCurrentUser();
