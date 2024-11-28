@@ -2,10 +2,13 @@ import { IUser } from "../../type/auth"
 import getUsers from "./get-users"
 export default function setUsers(user: IUser) {
     const users = getUsers()
-    const userExists = users.some((u: IUser) => u.username === user.username && u.password === user.password)
+    function userExists(users: IUser[]) {
+        return users.some((u: IUser) => u.username === user.username && u.password === user.password)
+    }
     console.log("cvhjbk", users)
-    if (users && users.length > 0) {
-        if (userExists) {
+    if (users !== null) {
+        console.log("cvhjbkfcghvjbk", users)
+        if (userExists(users)) {
             return
         }
         else {
@@ -13,8 +16,9 @@ export default function setUsers(user: IUser) {
             return localStorage.setItem("users", JSON.stringify(users))
         }
     }
-    else {
-        return localStorage.setItem("users", JSON.stringify([user]))
-    }
+
+    console.log("cvhjbk", users)
+    return localStorage.setItem("users", JSON.stringify([user]))
+
 
 }
