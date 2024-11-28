@@ -1,12 +1,9 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
+import Routing from './routes';
 function App() {
+
   return (
-    <div className="App items-center justify-center mt-10">
-      Lets start
-    </div>
+    <Routing />
   );
 }
 
