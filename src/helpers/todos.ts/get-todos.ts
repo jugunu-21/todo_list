@@ -1,8 +1,8 @@
-import { generateUserKey } from "../generateUserKey";
-import { useCurrentUser } from "./../zustand"
+
 import { TODOS_KEY } from "../storage-keys";
+import getSessionUser from "../session-user/get-session-user";
 export default function getTodos() {
-    const { currentUser } = useCurrentUser()
+    const { currentUser } = getSessionUser();
     if (!currentUser) {
         return
     }
