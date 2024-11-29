@@ -1,9 +1,15 @@
 
+import { Toaster } from 'react-hot-toast';
 import Routing from './routes';
 function App() {
 
   return (
-    <Routing />
+    <><Toaster
+      position="top-center"
+      reverseOrder={false}
+    />
+      <Routing /></>
+
   );
 }
 

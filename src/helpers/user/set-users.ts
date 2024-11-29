@@ -1,20 +1,56 @@
+
 import { IUser } from "../../type/auth"
 import { USERS_KEY } from "../storage-keys"
 import getUsers from "./get-users"
-export default function setUsers(user: IUser) {
+import { toast } from 'react-hot-toast';
+export function setUser(user: IUser) {
     const users = getUsers()
     const key = USERS_KEY
-    function userExists(users: IUser[]) {
+    function userExists(user: IUser) {
         return users.some((u: IUser) => u.username === user.username && u.password === user.password)
     }
-    if (users !== null) {
-        if (userExists(users)) {
-            return
+    try {
+        if (users !== null) {
+            if (userExists(user)) {
+                throw Error
+            }
+            toast.success("account successfully created ")
+            localStorage.setItem(key, JSON.stringify([user]))
+            return true
+
         }
-        else {
-            users.push(user)
-            return localStorage.setItem(key, JSON.stringify(users))
-        }
+        toast.success("account successfully created ")
+        localStorage.setItem(key, JSON.stringify([user]))
+        return true
     }
-    return localStorage.setItem(key, JSON.stringify([user]))
+    catch (error) {
+        toast.error("Some error occur ")
+
+    }
+
+}
+export function checkUser(user: IUser) {
+    const users = getUsers()
+    const key = USERS_KEY
+    function userExists(user: IUser) {
+        return users.some((u: IUser) => u.username === user.username && u.password === user.password)
+    }
+    try {
+        if (users !== null) {
+            if (userExists(user)) {
+                console.log("hy", userExists(users))
+                return true
+            }
+            console.log("false", userExists(users))
+            toast.error("No user exsist with this credentials")
+            return false
+        }
+        toast.error("No user exsist with this credentials")
+        return false
+
+    } catch (error) {
+        toast.error("Some error occur ")
+
+    }
+
 }
