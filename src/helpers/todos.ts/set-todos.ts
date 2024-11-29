@@ -1,16 +1,13 @@
 
 import { ITodos } from "../../type/todo"
-import { IUser } from "../../type/auth"
-import getTodos from "./get-todos"
-import { generateUserKey } from "./../generateUserKey"
 import { useCurrentUser } from "./../zustand"
+import { TODOS_KEY } from "../storage-keys"
 export default function setTodos(usertodos: ITodos) {
     const { currentUser } = useCurrentUser()
-    const userSession = currentUser;
     if (!currentUser) {
         return
     }
 
-    const key = generateUserKey(currentUser)
+    const key = TODOS_KEY(currentUser)
     return localStorage.setItem(key, JSON.stringify(usertodos))
 }
