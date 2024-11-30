@@ -4,8 +4,8 @@ import SignIn from './pages/sign-in';
 import SignUp from './pages/sign-up';
 import SignOut from './pages/sign-out';
 import { Home } from './pages/home';
-import { SignedOutRequireRoute } from './component/auth/signed-out-require-route';
-import { SignedInRequireRoute } from './component/auth/auth-require-route';
+import { SignedOutRequireRoute } from './components/auth/signed-out-require-route';
+import { SignedInRequireRoute } from './components/auth/auth-require-route';
 export default function Routing() {
     return (
         <Router>

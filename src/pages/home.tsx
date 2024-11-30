@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 // import { RootState } from '../redux/store';
 
 import { Button } from '../components/ui/button';
-import { CardWithForm } from '../component/todos/add-todos-form'
+import { CardWithForm } from '../components/todos/add-todos-form'
 import { useNavigate } from 'react-router-dom';
 const Home: React.FC = () => {
     const naviaget = useNavigate()
