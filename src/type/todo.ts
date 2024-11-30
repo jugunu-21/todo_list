@@ -1,5 +1,5 @@
-export type ITodoStatus = 'todo' | 'in-progress' | 'completed';
-export type ITodoCategory = 'personal' | 'office' | 'profession';
+export type ITodoStatus = 'todo' | 'completed';
+export type ITodoCategory = 'work' | 'personal' | 'home';
 export type ITodoPriority = 'low' | 'medium' | 'high';
 export interface ITodos {
     key: string;

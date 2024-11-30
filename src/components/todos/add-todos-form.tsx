@@ -120,9 +120,9 @@ export function CardWithForm({ sheetOpen, setSheetOpen }: { sheetOpen?: boolean,
                                     <SelectValue placeholder="Select a category" />
                                 </SelectTrigger>
                                 <SelectContent position="popper">
-                                    <SelectItem value="personal">Personal</SelectItem>
-                                    <SelectItem value="office">Office</SelectItem>
-                                    <SelectItem value="profession">Profession</SelectItem>
+                                    <SelectItem value="work">work</SelectItem>
+                                    <SelectItem value="personal">personal</SelectItem>
+                                    <SelectItem value="home">home</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>

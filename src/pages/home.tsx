@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { TodosTable } from '../components/todos/todos-table';
 import { CardWithForm } from '../components/todos/add-todos-form'
 import { useNavigate } from 'react-router-dom';
 import { Button } from "../components/ui/button"
@@ -16,6 +15,7 @@ import {
     SheetTrigger,
 } from "../components/ui/sheet"
 import { IoIosAddCircleOutline } from "react-icons/io";
+import { TodosListTable } from '../components/todos/todoslist-table';
 const Home: React.FC = () => {
     const naviaget = useNavigate()
     const [sheetOpen, setSheetOpen] = useState<boolean>(false)
@@ -33,7 +33,7 @@ const Home: React.FC = () => {
                 <CardWithForm />
             </div>
             <div className=' w-full col-span-8 border-2 rounded-lg border-slate-200  '>
-                <TodosTable />
+                <TodosListTable />
             </div>
         </div>
         <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>

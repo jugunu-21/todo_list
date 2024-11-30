@@ -13,7 +13,7 @@ function getFilterFunction(filterValue: string): (todos: ITodos[]) => ITodos[] {
         case 'filterCategory':
             return (todos: ITodos[]) => todos.filter(todo => todo.category); // Adjust based on actual category filtering logic
         case 'filterprogress':
-            return (todos: ITodos[]) => todos.filter(todo => todo.status === 'in-progress');
+            return (todos: ITodos[]) => todos.filter(todo => todo.status === 'todo');
         default:
             throw new Error(`Unknown filter value: ${filterValue}`);
     }
