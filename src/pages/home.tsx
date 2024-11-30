@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-// import { useDispatch, UseDispatch, useSelector } from 'react-redux';
-// import { addTodo, upadteTodo, removeTodo } from '../features/todos/todo-slice';
-// import { RootState } from '../redux/store';
-
+import { TodosTable } from '../components/todos/todos-table';
 import { Button } from '../components/ui/button';
 import { CardWithForm } from '../components/todos/add-todos-form'
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +13,9 @@ const Home: React.FC = () => {
             <div className=' col-span-4 border-2 '>
                 <CardWithForm />
             </div>
-            <div className=' w-full col-span-8 border-2 border-red-400  '>bjhk</div>
+            <div className=' w-full col-span-8 border-2 border-red-400  '>
+                <TodosTable />
+            </div>
         </div>
     </main>
     )
