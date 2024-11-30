@@ -16,6 +16,7 @@ import {
 } from "../components/ui/sheet"
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { TodosListTable } from '../components/todos/todoslist-table';
+import { UserIcon } from '../components/auth/user-icon';
 const Home: React.FC = () => {
     const naviaget = useNavigate()
     const [sheetOpen, setSheetOpen] = useState<boolean>(false)
@@ -26,7 +27,9 @@ const Home: React.FC = () => {
                 <div>Todos</div>
                 <div className=' border-t-4  border-amber-500'></div>
             </div>
-            <Button variant={"destructive"} className='px-2 py-1' onClick={() => naviaget("/signout")}>Logout</Button>
+            <div>
+                <UserIcon />
+            </div>
         </div>
         <div className='  md:grid md:grid-cols-3 h-[88vh] gap-1'>
             <div className='md:col-span-1 hidden md:block'>
