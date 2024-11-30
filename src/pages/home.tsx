@@ -4,22 +4,19 @@ import React, { useState } from 'react';
 // import { RootState } from '../redux/store';
 
 import { Button } from '../components/ui/button';
-import TodosForm from '../component/todos/todos-form';
+import { CardWithForm } from '../component/todos/add-todos-form'
+import { useNavigate } from 'react-router-dom';
 const Home: React.FC = () => {
-    return (<main className=" border-2 h-[100vh] m-4">
+    const naviaget = useNavigate()
+    return (<main className=" border-2 max-h-full border-green-200 m-4">
         <div className="flex justify-end">
-            <a className="px-2 py-1 m-3 bg-slate-300 rounded-md hover:bg-slate-400 focus:bg-slate-500" href="/signout">Logout</a>
+            <Button className='px-2 py-1 m-3' onClick={() => naviaget("/signout")}>Logout</Button>
         </div>
-        <Button className='border-amber-700 border-2'>ghbut</Button>
-        <div className=' border-2 md:grid grid-cols-12'>
-            <div className=' col-span-4 border-2 m-4'>
-
-
-
-                <TodosForm />
-
+        <div className=' border-2 md:flex h-[88vh]'>
+            <div className=' col-span-4 border-2 '>
+                <CardWithForm />
             </div>
-            <div className=' col-span-8 border-2'>bjhk</div>
+            <div className=' w-full col-span-8 border-2 border-red-400  '>bjhk</div>
         </div>
     </main>
     )
