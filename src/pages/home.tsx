@@ -28,11 +28,11 @@ const Home: React.FC = () => {
             </div>
             <Button variant={"destructive"} className='px-2 py-1' onClick={() => naviaget("/signout")}>Logout</Button>
         </div>
-        <div className='  md:flex h-[88vh] gap-1'>
-            <div className=' hidden md:block'>
+        <div className='  md:grid md:grid-cols-3 h-[88vh] gap-1'>
+            <div className='md:col-span-1 hidden md:block'>
                 <CardWithForm />
             </div>
-            <div>
+            <div className='md:col-span-2'>
                 <TodosListTable />
             </div>
         </div>

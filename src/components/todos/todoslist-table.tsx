@@ -282,8 +282,7 @@ export function TodosListTable() {
     })
 
     return (
-        <Card className="">
-
+        <Card >
             <CardContent>
                 <div className="w-full">
                     <div className="flex items-center py-4">
