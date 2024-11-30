@@ -19,7 +19,7 @@ import { TodosListTable } from '../components/todos/todoslist-table';
 const Home: React.FC = () => {
     const naviaget = useNavigate()
     const [sheetOpen, setSheetOpen] = useState<boolean>(false)
-    return (<main className=" max-h-full border-green-200 m-4">
+    return (<main className=" max-h-full overflow-y-hidden border-green-200 m-4">
         <div className="flex w-full  items-center justify-between p-3">
             <Button variant={"outline"} className='px-2 py-1 md:hidden' onClick={() => setSheetOpen(prev => !prev)}>Create Todos<IoIosAddCircleOutline /></Button>
             <div className='text-2xl font-semibold'>

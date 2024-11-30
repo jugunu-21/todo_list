@@ -12,6 +12,7 @@ import {
 } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
+import { motivationalQuotes } from "../../helpers/quotes"
 import {
     Select,
     SelectContent,
@@ -22,8 +23,27 @@ import {
 import { DatePicker } from "./data-picker";
 import { ITodoAddstring, ITodoCategory, ITodoPriority } from "@/type/todo";
 import toast from "react-hot-toast";
+import { SiComma } from "react-icons/si";
+import { useEffect, useState } from "react";
 
 export function CardWithForm({ sheetOpen, setSheetOpen }: { sheetOpen?: boolean, setSheetOpen?: ((n: boolean) => void) }) {
+
+
+    const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
+    const quotes = motivationalQuotes;
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setCurrentQuoteIndex((prevIndex) =>
+                (prevIndex + 1) % quotes.length
+            );
+        }, 60000); // Change quote every 60 seconds (1 minute)
+
+        return () => clearInterval(intervalId);
+    }, [quotes]);
+
+    const currentQuote = quotes[currentQuoteIndex];
+
+
     const dispatch = useDispatch();
     const [dueDate, setDueDate] = React.useState<Date>();
     const [title, setTitle] = React.useState<string>("");
@@ -77,7 +97,7 @@ export function CardWithForm({ sheetOpen, setSheetOpen }: { sheetOpen?: boolean,
 
     };
 
-    return (
+    return (<>
         <Card className="w-[350px]">
             <CardHeader>
                 <CardTitle>Create Todos</CardTitle>
@@ -149,5 +169,20 @@ export function CardWithForm({ sheetOpen, setSheetOpen }: { sheetOpen?: boolean,
                 <Button onClick={handleSubmit}>Add Task</Button>
             </CardFooter>
         </Card>
+
+        <div className=" m-2">
+            <div className=" flex justify-start">
+                <SiComma className=" transform scale-x-[-1] text-xl text-amber-600 " />
+                <SiComma className=" text-xl transform scale-x-[-1]  text-amber-600" /></div>
+
+            <div className="whitespace-pre-wrap font-medium text-lg pl-2">{" "}{" "}{" "}{" "}{" "}{currentQuote}</div>
+            <div className="flex justify-end gap-0  text-amber-600">
+                <SiComma className=" text-xl text-end" />
+                <SiComma className=" text-xl text-end  text-amber-600" /></div>
+
+        </div >
+
+
+    </>
     );
 }
