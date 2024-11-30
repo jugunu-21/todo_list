@@ -23,7 +23,7 @@ import { DatePicker } from "./data-picker";
 import { ITodoAddstring, ITodoCategory, ITodoPriority } from "@/type/todo";
 import toast from "react-hot-toast";
 
-export function CardWithForm() {
+export function CardWithForm({ sheetOpen, setSheetOpen }: { sheetOpen?: boolean, setSheetOpen?: ((n: boolean) => void) }) {
     const dispatch = useDispatch();
     const [dueDate, setDueDate] = React.useState<Date>();
     const [title, setTitle] = React.useState<string>("");
@@ -31,6 +31,8 @@ export function CardWithForm() {
     const [category, setCategory] = React.useState<ITodoCategory>();
     const [priority, setPriority] = React.useState<ITodoPriority>('low');
     const handleSubmit = () => {
+
+
         if (!title) {
             toast.error("Title is required");
             return;
@@ -61,7 +63,9 @@ export function CardWithForm() {
             category,
             priority// Adjust if ITodoCategory has different properties
         };
-
+        if (setSheetOpen !== undefined) {
+            setSheetOpen(!sheetOpen);
+        }
         console.log("FormData:", formData);
         dispatch(addTodo(formData));
         setTitle('');
