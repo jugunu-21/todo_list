@@ -19,7 +19,6 @@ export default function SignIn() {
                 password: password
             }
             if (checkUser(user)) {
-
                 setCurrentUser(user);
                 setSessionUser(user)
                 setUsername('');

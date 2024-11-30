@@ -60,7 +60,7 @@ const UsernameImage = ({ username }: { username: string }) => {
 };
 
 export const UserIcon = () => {
-    const { currentUser } = useCurrentUser();
+    const { currentUser, removeCurrentUser } = useCurrentUser();
     const capitalizedUsername = currentUser?.username?.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
     const navigate = useNavigate()
@@ -80,7 +80,9 @@ export const UserIcon = () => {
                 <DropdownMenuItem
                     onClick={() => {
                         navigate("/signin")
-                        return removeSessionUser()
+                        removeSessionUser()
+                        removeCurrentUser()
+                        return
                     }}
                 >
                     Logout

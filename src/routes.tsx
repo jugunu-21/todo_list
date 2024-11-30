@@ -13,7 +13,7 @@ export default function Routing() {
                 <Route path="/" element={<SignedInRequireRoute><Home /></SignedInRequireRoute>} />
                 <Route path="/signin" element={<SignedOutRequireRoute><SignIn /></SignedOutRequireRoute>} />
                 <Route path="/signup" element={<SignedOutRequireRoute><SignUp /></SignedOutRequireRoute>} />
-                <Route path="/signout" element={<SignedInRequireRoute><SignOut /></SignedInRequireRoute>} />
+
             </Routes>
         </Router>
     );

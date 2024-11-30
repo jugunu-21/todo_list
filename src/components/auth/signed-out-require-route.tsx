@@ -8,7 +8,7 @@ export function SignedOutRequireRoute({ children }: { children: React.ReactNode 
 
     if (currentUser && usersession) {
         console.log("User is already signed in. Redirecting to /signout.");
-        return <Navigate to="/signout" replace />;
+        return <Navigate to="/" replace />;
 
     }
 
