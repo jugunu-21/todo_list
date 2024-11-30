@@ -41,9 +41,8 @@ const filters: FilterType[] = [
 export function TodosTable() {
     const updatetodosReducer = useDispatch()
     const [selectedFilter, setSelectedFilter] = useState<FilterType>(filters[0]);
-    const data = useSelector((state: RootState) => state.todo.value)
-    const selector = filterAndSortTodos(data, selectedFilter.value);
-    console.log("alldatas", data, selector)
+    const tododata = useSelector((state: RootState) => state.todo.value)
+    const filteredTodos = filterAndSortTodos(tododata, selectedFilter.value);
     return (
         <div>
             <div className="px-4 py-7 flex items-center flex-wrap gap-1">
@@ -56,12 +55,12 @@ export function TodosTable() {
                     />
                 ))}
             </div>
-            {selector.length === 0 ?
-                <div>
+            {filteredTodos === null ?
+                <div className='m-4'>
                     There is no task available
                 </div>
                 :
-                <Table>
+                <Table className='m-4'>
                     <TableCaption>A list of your recent invoices.</TableCaption>
                     <TableHeader>
                         <TableRow>
@@ -75,8 +74,9 @@ export function TodosTable() {
                     </TableHeader>
                     <TableBody>
                         {
-                            selector.map((todo, index) => (
-                                <TableRow key={index}>
+                            filteredTodos.map((todo, index) => (
+                                <TableRow key={index} >
+
                                     <TableCell >{todo.title}</TableCell>
                                     <TableCell>{todo.description}</TableCell>
                                     <TableCell>{formatDateTime(todo.createdAt)}</TableCell>
@@ -90,6 +90,7 @@ export function TodosTable() {
                                             }))}
                                         >
                                             <SelectTrigger className="w-[180px]">
+
                                                 <SelectValue placeholder={todo.status} />
                                             </SelectTrigger>
                                             <SelectContent>

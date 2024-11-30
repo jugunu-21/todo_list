@@ -66,9 +66,10 @@ export function CardWithForm() {
         dispatch(addTodo(formData));
         setTitle('');
         setDescription('');
-        setDueDate(undefined);
-        setCategory(undefined); // Set category to undefined instead of null
         setPriority('low');
+        setDueDate(new Date());
+        setCategory(undefined);
+
 
     };
 
@@ -87,7 +88,7 @@ export function CardWithForm() {
                             <Label htmlFor="title">Title</Label>
                             <Input
                                 id="title"
-                                placeholder="Name of your project"
+                                placeholder="Title"
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                             />
