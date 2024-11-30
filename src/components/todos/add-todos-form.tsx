@@ -98,7 +98,7 @@ export function CardWithForm({ sheetOpen, setSheetOpen }: { sheetOpen?: boolean,
     };
 
     return (<>
-        <Card className="w-[350px]">
+        <Card className="">
             <CardHeader>
                 <CardTitle>Create Todos</CardTitle>
             </CardHeader>
@@ -169,18 +169,23 @@ export function CardWithForm({ sheetOpen, setSheetOpen }: { sheetOpen?: boolean,
                 <Button onClick={handleSubmit}>Add Task</Button>
             </CardFooter>
         </Card>
+        <Card className=" mt-2">
 
-        <div className=" m-2">
-            <div className=" flex justify-start">
-                <SiComma className=" transform scale-x-[-1] text-xl text-amber-600 " />
-                <SiComma className=" text-xl transform scale-x-[-1]  text-amber-600" /></div>
+            <CardContent className="">
+                <div className=" m-2">
+                    <div className=" flex justify-start">
+                        <SiComma className=" transform scale-x-[-1] text-xl text-amber-600 " />
+                        <SiComma className=" text-xl transform scale-x-[-1]  text-amber-600" /></div>
 
-            <div className="whitespace-pre-wrap font-medium text-lg pl-2">{" "}{" "}{" "}{" "}{" "}{currentQuote}</div>
-            <div className="flex justify-end gap-0  text-amber-600">
-                <SiComma className=" text-xl text-end" />
-                <SiComma className=" text-xl text-end  text-amber-600" /></div>
+                    <div className="whitespace-pre-wrap font-medium text-lg pl-2">{" "}{" "}{" "}{" "}{" "}{currentQuote}</div>
+                    <div className="flex justify-end gap-0  text-amber-600">
+                        <SiComma className=" text-xl text-end" />
+                        <SiComma className=" text-xl text-end  text-amber-600" /></div>
 
-        </div >
+                </div >
+
+            </CardContent>
+        </Card>
 
 
     </>
