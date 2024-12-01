@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCurrentUser } from '../helpers/zustand';
 import { setUser, checkUser } from '../helpers/user/set-users';
 import setSessionUser from '../helpers/session-user/set-session-user';
+import { Button } from '../components/ui/button';
 export default function SignUp() {
     const navigate = useNavigate();
     const { setCurrentUser } = useCurrentUser();
@@ -76,13 +77,20 @@ export default function SignUp() {
                         </div>
 
                         <div>
-                            <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign up</button>
+                            <div className='  flex justify-center items-center w-full'>
+                                <Button className='w-full' type="submit"  >
+
+                                    Sign Up
+                                </Button>
+
+                            </div>
+
                         </div>
                     </form>
 
                     <p className="mt-10 text-center text-sm/6 text-gray-500">
                         Have an account?
-                        <a href="/signin" className="font-semibold text-indigo-600 hover:text-indigo-500">Sign In</a>
+                        <a href="/signin" className=" text-semibold ml-1 font-semibold text-amber-800 hover:text-amber-900">Sign In</a>
                     </p>
                 </div>
             </div>

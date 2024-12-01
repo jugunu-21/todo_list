@@ -52,36 +52,35 @@ export const todoSlice = createSlice({
         },
         filterTodosReducer: (state, action: PayloadAction<string[]>) => {
             if (state.value) {
+
                 const filterArray = action.payload;
-
-                // Map filters to their corresponding properties
-
-                const statusFilter = filterArray.includes('todo') ? 'status' : null;
-                const priorityFilter = filterArray.includes('low') || filterArray.includes('medium') || filterArray.includes('high') ? 'priority' : null;
-                const categoryFilter = filterArray.includes('work') || filterArray.includes('personal') || filterArray.includes('home') ? 'category' : null;
-
-                // Apply filters based on the mapped properties
+                if (filterArray.length === 0) {
+                    state.value = initialState.value; // Reset to initial state
+                    return;
+                }
                 state.value = state.value.filter(todo => {
-                    let matchesAllCriteria = true;
-
-                    if (statusFilter) {
-                        matchesAllCriteria = matchesAllCriteria && todo[statusFilter] === filterArray.find(f => f === 'todo');
-                    }
-
-
-                    if (priorityFilter) {
-                        matchesAllCriteria = matchesAllCriteria && todo[priorityFilter] === filterArray.find(f => ['low', 'medium', 'high'].includes(f));
-                    }
-
-                    if (categoryFilter) {
-                        matchesAllCriteria = matchesAllCriteria && todo[categoryFilter] === filterArray.find(f => ['work', 'personal', 'home'].includes(f));
-                    }
-
-                    return matchesAllCriteria;
+                    return filterArray.some(filter => {
+                        switch (filter) {
+                            case 'todo':
+                                return todo.status === 'todo';
+                            case 'completed':
+                                return todo.status === 'completed';
+                            case 'low':
+                            case 'medium':
+                            case 'high':
+                                return todo.priority === filter;
+                            case 'work':
+                            case 'personal':
+                            case 'home':
+                                return todo.category === filter;
+                            default:
+                                return false; // Ignore unrecognized filters
+                        }
+                    });
                 });
             }
+        }
 
-        },
     }
 })
 

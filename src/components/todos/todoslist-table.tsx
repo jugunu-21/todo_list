@@ -4,7 +4,7 @@ import { HeaderButton } from './header-chip'
 import { RootState } from "../../redux/store"
 
 import { formatDate, formatDateTime } from "../../helpers/date-formator"
-import { useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { Label } from "../ui/label"
 import {
     Popover,
@@ -102,6 +102,20 @@ const filters: FilterType[] = [
 ];
 
 export function TodosListTable() {
+    const [shouldRerender, setShouldRerender] = useState(false)
+    const data = useSelector((state: RootState) => state.todo.value)
+    const hasReloaded = useRef(false)
+
+    // useEffect(() => {
+    //     if (!data || data.length === 0) {
+    //         if (!hasReloaded.current) {
+    //             hasReloaded.current = true
+    //             window.location.reload()
+    //         }
+    //     } else {
+    //         hasReloaded.current = false // Reset the flag if data becomes available
+    //     }
+    // }, [data])
 
 
     const [checkedFilters, setCheckedFilters] = useState<string[]>(["all"]);
@@ -122,11 +136,10 @@ export function TodosListTable() {
             throw error;
         }
     }
-
     const [toDo, setTodo] = useState<ITodos>()
     const updatetodosReducer = useDispatch()
-    const data = useSelector((state: RootState) => state.todo.value)
-    console.log("filteredData ",)
+
+    console.log("filteredData ", data)
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []
@@ -417,81 +430,85 @@ export function TodosListTable() {
                         </div>
 
                     </div>
-                    <div className="rounded-md border">
-                        <Table>
-                            <TableHeader>
-                                {table.getHeaderGroups().map((headerGroup) => (
-                                    <TableRow key={headerGroup.id}>
-                                        {headerGroup.headers.map((header) => {
-                                            return (
-                                                <TableHead key={header.id}>
-                                                    {header.isPlaceholder
-                                                        ? null
-                                                        : flexRender(
-                                                            header.column.columnDef.header,
-                                                            header.getContext()
-                                                        )}
-                                                </TableHead>
-                                            )
-                                        })}
-                                    </TableRow>
-                                ))}
-                            </TableHeader>
-                            <TableBody>
-                                {table.getRowModel().rows?.length ? (
-                                    table.getRowModel().rows.map((row) => (
-                                        <TableRow
-                                            key={row.id}
-                                            data-state={row.getIsSelected() && "selected"}
-                                        >
-                                            {row.getVisibleCells().map((cell) => (
-                                                <TableCell key={cell.id}>
-                                                    {flexRender(
-                                                        cell.column.columnDef.cell,
-                                                        cell.getContext()
-                                                    )}
-                                                </TableCell>
-                                            ))}
+                    {data != null ? (<>
+                        <div className="rounded-md border">
+                            <Table>
+                                <TableHeader>
+                                    {table.getHeaderGroups().map((headerGroup) => (
+                                        <TableRow key={headerGroup.id}>
+                                            {headerGroup.headers.map((header) => {
+                                                return (
+                                                    <TableHead key={header.id}>
+                                                        {header.isPlaceholder
+                                                            ? null
+                                                            : flexRender(
+                                                                header.column.columnDef.header,
+                                                                header.getContext()
+                                                            )}
+                                                    </TableHead>
+                                                )
+                                            })}
                                         </TableRow>
-                                    ))
-                                ) : (
-                                    <TableRow>
-                                        <TableCell
-                                            colSpan={columns.length}
-                                            className="h-24 text-center"
-                                        >
-                                            No results.
-                                        </TableCell>
-                                    </TableRow>
-                                )}
-                            </TableBody>
-                        </Table>
-                    </div>
-                    <div className="flex items-center justify-end space-x-2 pt-2 pb-0">
-                        {/* <div className="flex-1 text-sm text-muted-foreground">
+                                    ))}
+                                </TableHeader>
+                                <TableBody>
+                                    {table.getRowModel().rows?.length ? (
+                                        table.getRowModel().rows.map((row) => (
+                                            <TableRow
+                                                key={row.id}
+                                                data-state={row.getIsSelected() && "selected"}
+                                            >
+                                                {row.getVisibleCells().map((cell) => (
+                                                    <TableCell key={cell.id}>
+                                                        {flexRender(
+                                                            cell.column.columnDef.cell,
+                                                            cell.getContext()
+                                                        )}
+                                                    </TableCell>
+                                                ))}
+                                            </TableRow>
+                                        ))
+                                    ) : (
+                                        <TableRow>
+                                            <TableCell
+                                                colSpan={columns.length}
+                                                className="h-24 text-center"
+                                            >
+                                                No results.
+                                            </TableCell>
+                                        </TableRow>
+                                    )}
+                                </TableBody>
+                            </Table>
+                        </div>
+                        <div className="flex items-center justify-end space-x-2 pt-2 pb-0">
+                            {/* <div className="flex-1 text-sm text-muted-foreground">
                             {table.getFilteredSelectedRowModel().rows.length} of{" "}
                             {table.getFilteredRowModel().rows.length} row(s) selected.
                         </div> */}
-                        <div className="space-x-2">
-                            <Button
+                            <div className="space-x-2">
+                                <Button
 
-                                variant="outline"
-                                size="sm"
-                                onClick={() => table.previousPage()}
-                                disabled={!table.getCanPreviousPage()}
-                            >
-                                Previous
-                            </Button>
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => table.nextPage()}
-                                disabled={!table.getCanNextPage()}
-                            >
-                                Next
-                            </Button>
-                        </div>
-                    </div>
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => table.previousPage()}
+                                    disabled={!table.getCanPreviousPage()}
+                                >
+                                    Previous
+                                </Button>
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => table.nextPage()}
+                                    disabled={!table.getCanNextPage()}
+                                >
+                                    Next
+                                </Button>
+                            </div>
+                        </div></>
+                    ) : (
+                        <>There is no data tasks available ... </>
+                    )}
                 </div>
             </CardContent>
 
