@@ -22,7 +22,7 @@ const Home: React.FC = () => {
     const naviaget = useNavigate()
     const [sheetOpen, setSheetOpen] = useState<boolean>(false)
 
-    return (<main className=" max-h-full overflow-y-hidden border-green-200 m-4">
+    return (<main className=" max-h-full    m-4">
         <div className="flex w-full  items-center justify-between p-3">
             <Button className='px-2 py-1 md:hidden' onClick={() => setSheetOpen(prev => !prev)}>Create Todos<IoIosAddCircleOutline /></Button>
             <div className='text-2xl font-semibold'>
@@ -33,18 +33,18 @@ const Home: React.FC = () => {
                 <UserIcon />
             </div>
         </div>
-        <div className='  md:grid md:grid-cols-3 h-[88vh] gap-1'>
+        <div className=' max-w-full md:grid md:grid-cols-3 h-[88vh] gap-1'>
             <div className='md:col-span-1 hidden md:block'>
                 <CardWithForm />
             </div>
-            <div className='md:col-span-2'>
+            <div className='md:col-span-2  '>
                 <TodosListTable />
             </div>
         </div>
         <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
             <SheetContent side="left" >
 
-                <div className=" overflow-y-auto w-full  h-full mt-4">
+                <div className=" overflow-y-auto w-full  mt-4">
 
                     <CardWithForm sheetOpen={sheetOpen} setSheetOpen={setSheetOpen} />
 
