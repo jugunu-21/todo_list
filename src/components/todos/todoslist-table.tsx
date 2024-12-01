@@ -85,6 +85,7 @@ import {
     AlertDialogTrigger,
 } from "../../components/ui/alert-dialog"
 import { Updatecard } from "./update-todos"
+import { Badge } from "../ui/badge"
 interface FilterType {
     value: string;
     label: string;
@@ -195,7 +196,7 @@ export function TodosListTable() {
                     </Button>
                 )
             },
-            cell: ({ row }) => <div className="lowercase ml-4">{row.getValue("status")}</div>,
+            cell: ({ row }) => <Badge className="lowercase ml-4" variant="secondary">{row.getValue("status")}</Badge>
         },
         {
             accessorKey: "title",
@@ -218,7 +219,7 @@ export function TodosListTable() {
                     </Button>
                 )
             },
-            cell: ({ row }) => <div className="lowercase">{row.getValue("priority")}</div>,
+            cell: ({ row }) => <Badge variant="secondary">{row.getValue("priority")}</Badge>,
         },
         {
             accessorKey: "createdAt",
@@ -267,7 +268,9 @@ export function TodosListTable() {
                     </Button>
                 )
             },
-            cell: ({ row }) => <div className="lowercase">{row.getValue("category")}</div>,
+            cell: ({ row }) =>
+                <Badge className="lowercase" variant="secondary">{row.getValue("category")}</Badge>
+
         },
         {
             id: "actions",
