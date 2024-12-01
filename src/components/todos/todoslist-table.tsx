@@ -48,8 +48,8 @@ import {
 } from "../../components/ui/card";
 import { useDispatch, useSelector, UseSelector } from "react-redux"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select'
-import { ITodoCategory, ITodos, ITodoStatus } from '@/type/todo'
-import { addTodo, removeTodo, updateTodo } from "../../features/todos/todo-slice"
+import { filterValues, ITodoCategory, ITodos, ITodoStatus } from '../../type/todo'
+import { addTodo, removeTodo, updateTodo, filterTodosReducer } from "../../features/todos/todo-slice"
 import { UseDispatch } from 'react-redux'
 import { Input } from "../../components/ui/input"
 import {
@@ -122,36 +122,10 @@ export function TodosListTable() {
             throw error;
         }
     }
-    function filterTodos(data: ITodos[], selectedFilters: string[]): ITodos[] {
-        return data.filter(todo => {
-            // Convert the Set to an array for easier manipulation
-            const filterArray = selectedFilters;
 
-            // Check if any field in the todo matches any filter
-            return Object.entries(todo).some(([key, value]) => {
-                // Special handling for 'all' filter
-                if (filterArray.includes('all')) return todo;
-
-                // Check if the value matches any filter
-                return filterArray.some(filter => {
-                    // Handle string fields
-                    if (typeof value === 'string') {
-                        return value.toLowerCase().includes(filter.toLowerCase());
-                    }
-                    // Handle enum-like fields (status, category, priority)
-                    if (['status', 'category', 'priority'].includes(key)) {
-                        return value === filter;
-                    }
-                    // Default case: don't match
-                    return false;
-                });
-            });
-        });
-    }
     const [toDo, setTodo] = useState<ITodos>()
     const updatetodosReducer = useDispatch()
     const data = useSelector((state: RootState) => state.todo.value)
-    const datafromredux: ITodos[] = filterTodos(data, checkedFilters);
     console.log("filteredData ",)
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -396,7 +370,9 @@ export function TodosListTable() {
                                             key={filter.value}
 
                                             checked={checkedFilters.includes(filter.value)}
-
+                                            onClick={() => {
+                                                updatetodosReducer(filterTodosReducer(checkedFilters))
+                                            }}
                                             onCheckedChange={(value) => {
 
                                                 toggleFilter(filter.value);

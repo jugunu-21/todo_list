@@ -1,6 +1,7 @@
 export type ITodoStatus = 'todo' | 'completed';
 export type ITodoCategory = 'work' | 'personal' | 'home';
 export type ITodoPriority = 'low' | 'medium' | 'high';
+export type filterValues = 'all' | 'low' | 'medium' | 'high' | 'work' | 'personal' | 'home' | 'work' | 'personal' | 'home' | 'todo' | 'completed';
 export interface ITodos {
     key: string;
     title: string;
