@@ -66,7 +66,7 @@ export const UserIcon = () => {
     const navigate = useNavigate()
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger asChild className='none outline-none'>
                 <button>
                     {currentUser?.username ? (
                         <UsernameImage username={currentUser?.username} />
@@ -85,7 +85,7 @@ export const UserIcon = () => {
                         return
                     }}
                 >
-                    Logout
+                    <Button variant={"destructive"} className=''>LogOut</Button>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
 

@@ -24,7 +24,7 @@ const Home: React.FC = () => {
 
     return (<main className=" max-h-full overflow-y-hidden border-green-200 m-4">
         <div className="flex w-full  items-center justify-between p-3">
-            <Button variant={"outline"} className='px-2 py-1 md:hidden' onClick={() => setSheetOpen(prev => !prev)}>Create Todos<IoIosAddCircleOutline /></Button>
+            <Button className='px-2 py-1 md:hidden' onClick={() => setSheetOpen(prev => !prev)}>Create Todos<IoIosAddCircleOutline /></Button>
             <div className='text-2xl font-semibold'>
                 <div>Todo-Blink</div>
                 <div className=' border-t-4  border-amber-500'></div>

@@ -348,7 +348,7 @@ export function TodosListTable() {
         <Card className="h-full">
             <CardContent>
                 <div className="w-full h-full">
-                    <div className="flex items-center py-4">
+                    <div className="flex items-center py-4 justify-between ">
                         <Input
                             placeholder="Search for title..."
                             value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
@@ -357,62 +357,65 @@ export function TodosListTable() {
                             }
                             className="max-w-sm"
                         />
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="outline" className="ml-auto">
-                                    Filters
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                {filters.map((filter, index) => {
-                                    return (
-                                        <DropdownMenuCheckboxItem
-                                            key={filter.value}
-
-                                            checked={checkedFilters.includes(filter.value)}
-                                            onClick={() => {
-                                                updatetodosReducer(filterTodosReducer(checkedFilters))
-                                            }}
-                                            onCheckedChange={(value) => {
-
-                                                toggleFilter(filter.value);
-
-                                            }
-
-                                            }
-                                        >
-                                            {filter.label}
-                                        </DropdownMenuCheckboxItem>
-                                    )
-                                })}
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="outline" className="ml-auto">
-                                    Columns <ChevronDown />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                {table
-                                    .getAllColumns()
-                                    .filter((column) => column.getCanHide())
-                                    .map((column) => {
+                        <div className="flex gap-2">
+                            <DropdownMenu >
+                                <DropdownMenuTrigger asChild className=" ">
+                                    <Button variant="outline" className="justify-end ">
+                                        Filters
+                                    </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end">
+                                    {filters.map((filter, index) => {
                                         return (
                                             <DropdownMenuCheckboxItem
-                                                key={column.id}
-                                                className="capitalize"
-                                                checked={column.getIsVisible()}
-                                                onCheckedChange={(value) =>
-                                                    column.toggleVisibility(!!value)
+                                                key={filter.value}
+
+                                                checked={checkedFilters.includes(filter.value)}
+                                                onClick={() => {
+                                                    updatetodosReducer(filterTodosReducer(checkedFilters))
+                                                }}
+                                                onCheckedChange={(value) => {
+
+                                                    toggleFilter(filter.value);
+
+                                                }
+
                                                 }
                                             >
-                                                {column.id}
+                                                {filter.label}
                                             </DropdownMenuCheckboxItem>
                                         )
                                     })}
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Button variant="outline" className="ml-auto">
+                                        Columns <ChevronDown />
+                                    </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end">
+                                    {table
+                                        .getAllColumns()
+                                        .filter((column) => column.getCanHide())
+                                        .map((column) => {
+                                            return (
+                                                <DropdownMenuCheckboxItem
+                                                    key={column.id}
+                                                    className="capitalize"
+                                                    checked={column.getIsVisible()}
+                                                    onCheckedChange={(value) =>
+                                                        column.toggleVisibility(!!value)
+                                                    }
+                                                >
+                                                    {column.id}
+                                                </DropdownMenuCheckboxItem>
+                                            )
+                                        })}
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        </div>
+
                     </div>
                     <div className="rounded-md border">
                         <Table>
