@@ -8,13 +8,17 @@ interface Iuser {
 const usersession = getSessionUser()
 interface IuseUser {
     currentUser: Iuser | null;
+    setCurrentUserwithoutprops: () => void;
     setCurrentUser: (user: Iuser) => void;
     removeCurrentUser: () => void;
 }
 export const useCurrentUser = create<IuseUser>((set: any) => ({
     currentUser: usersession,
+    setCurrentUserwithoutprops: () => set(() => ({
+        user: getSessionUser()
+    })),
     setCurrentUser: (user: Iuser) => set(() => ({
-        user: user
+        user: user || usersession
     })),
     removeCurrentUser: () => set(() => ({
         user: null

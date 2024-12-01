@@ -21,6 +21,7 @@ import { useCurrentUser } from '../../helpers/zustand';
 import { removeSessionUser } from "./../../helpers/session-user/remove-session-user"
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import getSessionUser from '../../helpers/session-user/get-session-user';
 
 const InitialsCircle = styled.div`
   width: 32px;
@@ -60,8 +61,9 @@ const UsernameImage = ({ username }: { username: string }) => {
 };
 
 export const UserIcon = () => {
-    const { currentUser, removeCurrentUser } = useCurrentUser();
-    const capitalizedUsername = currentUser?.username?.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    const { removeCurrentUser } = useCurrentUser()
+    const currentUser = getSessionUser()
+    const capitalizedUsername = currentUser?.username?.split(' ').map((word: string) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
     const navigate = useNavigate()
     return (

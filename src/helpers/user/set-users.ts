@@ -14,8 +14,9 @@ export function setUser(user: IUser) {
             if (userExists(user)) {
                 throw Error
             }
+
             toast.success("account successfully created ")
-            localStorage.setItem(key, JSON.stringify([user]))
+            localStorage.setItem(key, JSON.stringify([user, ...users]))
             return true
 
         }
