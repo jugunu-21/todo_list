@@ -67,7 +67,7 @@ export const UserIcon = () => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild className='none outline-none'>
-                <button>
+                <button className='border-2  rounded-full'>
                     {currentUser?.username ? (
                         <UsernameImage username={currentUser?.username} />
                     ) : (
@@ -85,7 +85,7 @@ export const UserIcon = () => {
                         return
                     }}
                 >
-                    <Button variant={"destructive"} className='bg-red-300'>LogOut</Button>
+                    <Button variant={"destructive"} >LogOut</Button>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
 
