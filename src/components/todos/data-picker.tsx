@@ -5,13 +5,13 @@ import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 
 import { cn } from "../../lib/utils"
-import { Button } from "../ui/button"
-import { Calendar } from "../ui/calendar"
+import { Button } from "../../components/ui/button"
+import { Calendar } from "../../components/ui/calendar"
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from "../ui/popover"
+} from "../../components/ui/popover"
 
 // export function DatePicker({ dueDate setDueDate }: { setDueDate: (gvj: Date) => void })
 
@@ -20,6 +20,7 @@ export function DatePicker({ dueDate, setDueDate }: { dueDate: Date | undefined;
     React.useEffect(() => {
         if (dueDate !== date && date != undefined) {
             setDueDate(date);
+            console.log()
         }
     }, [date]);
     return (
@@ -33,7 +34,7 @@ export function DatePicker({ dueDate, setDueDate }: { dueDate: Date | undefined;
                     )}
                 >
                     <CalendarIcon />
-                    {date ? format(date, "PPP") : <span>Pick a date</span>}
+                    {dueDate ? format(dueDate, "PPP") : <span>Pick a date</span>}
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">

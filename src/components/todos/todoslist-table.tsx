@@ -1,11 +1,10 @@
 
 import * as React from "react"
-
 import { HeaderButton } from './header-chip'
-import { RootState } from "@/redux/store"
+import { RootState } from "../../redux/store"
 
 import { formatDate, formatDateTime } from "../../helpers/date-formator"
-
+import { useMemo } from 'react'
 import { Label } from "../ui/label"
 import {
     Popover,
@@ -50,7 +49,7 @@ import {
 import { useDispatch, useSelector, UseSelector } from "react-redux"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select'
 import { ITodoCategory, ITodos, ITodoStatus } from '@/type/todo'
-import { addTodo, removeTodo, upadteTodo } from "../../features/todos/todo-slice"
+import { addTodo, removeTodo, updateTodo } from "../../features/todos/todo-slice"
 import { UseDispatch } from 'react-redux'
 import { Input } from "../../components/ui/input"
 import {
@@ -63,23 +62,49 @@ import {
 } from "../../components/ui/table"
 import { useState } from "react"
 import { filterAndSortTodos } from "../../helpers/todos/todos-filters-arrangement"
+import {
+    Sheet,
+    SheetClose,
+    SheetContent,
+    SheetDescription,
+    SheetFooter,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "../../components/ui/sheet"
 
-
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "../../components/ui/alert-dialog"
+import { Updatecard } from "./update-todos"
 interface FilterType {
     value: string;
     label: string;
 }
 const filters: FilterType[] = [
     { value: 'all', label: 'All Tasks' },
-    { value: 'FilterCompleted', label: 'Completed Tasks' },
-    { value: 'sortIncreasingPriority', label: 'Priority Low to High' },
-    { value: 'sortDecresingPriority', label: 'Priority High to Low' },
-    { value: 'filterCategory', label: 'Filter Category' },
-    { value: 'filterprogress', label: 'Task In Progress' }
+    { value: 'completed', label: 'Completed Tasks' },
+    { value: 'todo', label: 'uncompleted Tasks' },
+    { value: 'high', label: 'High Priority' },
+    { value: 'medium', label: 'Medium Priority' },
+    { value: 'low', label: 'Low Priority' },
+    { value: 'work', label: 'Work task' },
+    { value: 'personal', label: 'personal task' },
+    { value: 'home', label: 'home task' },
 ];
 
-
 export function TodosListTable() {
+
+
+    const [checkedFilters, setCheckedFilters] = useState<string[]>(["all"]);
     function formatDate(date: Date): string {
         const options: Intl.DateTimeFormatOptions = {
             year: 'numeric',
@@ -97,17 +122,43 @@ export function TodosListTable() {
             throw error;
         }
     }
+    function filterTodos(data: ITodos[], selectedFilters: string[]): ITodos[] {
+        return data.filter(todo => {
+            // Convert the Set to an array for easier manipulation
+            const filterArray = selectedFilters;
 
+            // Check if any field in the todo matches any filter
+            return Object.entries(todo).some(([key, value]) => {
+                // Special handling for 'all' filter
+                if (filterArray.includes('all')) return todo;
+
+                // Check if the value matches any filter
+                return filterArray.some(filter => {
+                    // Handle string fields
+                    if (typeof value === 'string') {
+                        return value.toLowerCase().includes(filter.toLowerCase());
+                    }
+                    // Handle enum-like fields (status, category, priority)
+                    if (['status', 'category', 'priority'].includes(key)) {
+                        return value === filter;
+                    }
+                    // Default case: don't match
+                    return false;
+                });
+            });
+        });
+    }
+    const [toDo, setTodo] = useState<ITodos>()
     const updatetodosReducer = useDispatch()
-    const [selectedFilter, setSelectedFilter] = useState<FilterType>(filters[0]);
     const data = useSelector((state: RootState) => state.todo.value)
-
-    // const data: ITodos[] = filterAndSortTodos(tododata, selectedFilter.value);
-
+    const datafromredux: ITodos[] = filterTodos(data, checkedFilters);
+    console.log("filteredData ",)
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []
     )
+
+    const [updateOpen, setUpdateOpen] = useState<boolean>(false)
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
@@ -130,13 +181,13 @@ export function TodosListTable() {
                     onCheckedChange={(value) => {
                         console.log("valllluee", value)
                         if (value) {
-                            updatetodosReducer(upadteTodo({
+                            updatetodosReducer(updateTodo({
                                 key: row.original.key,
                                 status: 'completed'
 
                             }));
                         } else {
-                            updatetodosReducer(upadteTodo({
+                            updatetodosReducer(updateTodo({
                                 key: row.original.key,
                                 status: 'todo'
                             }));
@@ -163,7 +214,7 @@ export function TodosListTable() {
                     </Button>
                 )
             },
-            cell: ({ row }) => <div className="lowercase">{row.getValue("status")}</div>,
+            cell: ({ row }) => <div className="lowercase ml-4">{row.getValue("status")}</div>,
         },
         {
             accessorKey: "title",
@@ -177,6 +228,7 @@ export function TodosListTable() {
             header: ({ column }) => {
                 return (
                     <Button
+                        className="align-left ml-0 pl-0"
                         variant="ghost"
                         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     >
@@ -193,6 +245,7 @@ export function TodosListTable() {
                 return (
                     <Button
                         variant="ghost"
+                        className="align-left ml-0 pl-0"
                         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     >
                         createdAt
@@ -207,6 +260,7 @@ export function TodosListTable() {
             header: ({ column }) => {
                 return (
                     <Button
+                        className="align-left ml-0 pl-0"
                         variant="ghost"
                         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     >
@@ -224,6 +278,7 @@ export function TodosListTable() {
                 return (
                     <Button
                         variant="ghost"
+                        className="align-left ml-0 pl-0"
                         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     >
                         category
@@ -254,10 +309,31 @@ export function TodosListTable() {
                                 Delete
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>Update</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => {
+                                setUpdateOpen(true); setTodo(payment)
+
+                            }}>
+                                Update
+                            </DropdownMenuItem>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                         </DropdownMenuContent>
-                    </DropdownMenu>
+                    </DropdownMenu >
                 )
             },
         },
@@ -280,14 +356,27 @@ export function TodosListTable() {
             rowSelection,
         },
     })
+    const toggleFilter = (filterValue: string) => {
+        const newFilters = [...checkedFilters]; // Create a copy of the current filters
 
+        if (newFilters.includes(filterValue)) {
+            // Remove the filter if it already exists
+            newFilters.splice(newFilters.indexOf(filterValue), 1);
+        } else {
+            // Add the filter if it doesn't exist
+            newFilters.push(filterValue);
+        }
+
+        setCheckedFilters(newFilters);
+        console.log("Updated filters:", newFilters);
+    };
     return (
-        <Card >
+        <Card className="h-full">
             <CardContent>
-                <div className="w-full">
+                <div className="w-full h-full">
                     <div className="flex items-center py-4">
                         <Input
-                            placeholder="filter todos..."
+                            placeholder="Search for title..."
                             value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
                             onChange={(event) =>
                                 table.getColumn("title")?.setFilterValue(event.target.value)
@@ -297,23 +386,30 @@ export function TodosListTable() {
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline" className="ml-auto">
-                                    Filters <ChevronDown />
+                                    Filters
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
                                 {filters.map((filter, index) => {
                                     return (
-                                        <DropdownMenuItem
-                                            key={index}
-                                        // onClick={() => setSelectedFilter(filter)}
+                                        <DropdownMenuCheckboxItem
+                                            key={filter.value}
+
+                                            checked={checkedFilters.includes(filter.value)}
+
+                                            onCheckedChange={(value) => {
+
+                                                toggleFilter(filter.value);
+
+                                            }
+
+                                            }
                                         >
                                             {filter.label}
-                                        </DropdownMenuItem>
-
+                                        </DropdownMenuCheckboxItem>
                                     )
                                 })}
                             </DropdownMenuContent>
-
                         </DropdownMenu>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
@@ -393,32 +489,57 @@ export function TodosListTable() {
                         </Table>
                     </div>
                     {/* <div className="flex items-center justify-end space-x-2 py-4">
-                <div className="flex-1 text-sm text-muted-foreground">
-                    {table.getFilteredSelectedRowModel().rows.length} of{" "}
-                    {table.getFilteredRowModel().rows.length} row(s) selected.
-                </div>
-                <div className="space-x-2">
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => table.previousPage()}
-                        disabled={!table.getCanPreviousPage()}
-                    >
-                        Previous
-                    </Button>
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => table.nextPage()}
-                        disabled={!table.getCanNextPage()}
-                    >
-                        Next
-                    </Button>
-                </div>
-            </div> */}
+                        <div className="flex-1 text-sm text-muted-foreground">
+                            {table.getFilteredSelectedRowModel().rows.length} of{" "}
+                            {table.getFilteredRowModel().rows.length} row(s) selected.
+                        </div>
+                        <div className="space-x-2">
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => table.previousPage()}
+                                disabled={!table.getCanPreviousPage()}
+                            >
+                                Previous
+                            </Button>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => table.nextPage()}
+                                disabled={!table.getCanNextPage()}
+                            >
+                                Next
+                            </Button>
+                        </div>
+                    </div> */}
                 </div>
             </CardContent>
-        </Card>
+
+
+            <AlertDialog open={updateOpen} onOpenChange={setUpdateOpen}>
+
+                <AlertDialogContent >
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            {toDo !== undefined &&
+                                <Updatecard
+                                    todos={toDo}
+                                    sheetOpen={updateOpen}
+                                    setSheetOpen={setUpdateOpen}
+                                />}
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    {/* <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction>Continue</AlertDialogAction>
+                    </AlertDialogFooter> */}
+                </AlertDialogContent>
+            </AlertDialog>
+
+
+
+        </Card >
 
     )
 }

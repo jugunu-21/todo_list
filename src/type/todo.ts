@@ -16,7 +16,7 @@ export interface ITodosSlice {
     value: ITodos[]
 }
 export interface ITodoUpdate {
-    key: string; title?: string; dueDate?: Date; description?: string; status?: ITodoStatus; priority?: ITodoPriority, category?: ITodoCategory
+    key: string; title?: string; dueDate?: string; description?: string; status?: ITodoStatus; priority?: ITodoPriority, category?: ITodoCategory
 }
 export interface ITodoRemove {
     key: string

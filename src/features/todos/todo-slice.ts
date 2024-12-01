@@ -33,11 +33,11 @@ export const todoSlice = createSlice({
             setTodos(state.value)
             console.log("value", ...state.value);
         },
-        upadteTodo: (state, action: PayloadAction<ITodoUpdate>) => {
+        updateTodo: (state, action: PayloadAction<ITodoUpdate>) => {
             const index = state.value.findIndex(todo => todo.key === action.payload.key)
             const updatedFields = {
                 ...action.payload,
-                dueDate: typeof action.payload.dueDate === 'string' ? action.payload.dueDate : action.payload.dueDate?.toISOString() || ''
+
             };
             if (index !== -1) {
                 state.value[index] = { ...state.value[index], ...updatedFields }
@@ -54,6 +54,6 @@ export const todoSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { addTodo, removeTodo, upadteTodo } = todoSlice.actions
+export const { addTodo, removeTodo, updateTodo } = todoSlice.actions
 
 export default todoSlice.reducer
