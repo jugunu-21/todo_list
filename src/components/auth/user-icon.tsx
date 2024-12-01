@@ -80,7 +80,7 @@ export const UserIcon = () => {
             <DropdownMenuContent align="end" className=''>
                 <DropdownMenuLabel>{capitalizedUsername}</DropdownMenuLabel>
                 <DropdownMenuItem
-                    className='mx-2 bg-red-300 hover:bg-red-400 focus:bg-red-500'
+                    className='mx-2 bg-red-500 hover:bg-red-500 focus:bg-red-500'
                     onClick={() => {
                         navigate("/signin")
                         removeSessionUser()
@@ -88,7 +88,7 @@ export const UserIcon = () => {
                         return
                     }}
                 >
-                    LogOut
+                    Log Out
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
 

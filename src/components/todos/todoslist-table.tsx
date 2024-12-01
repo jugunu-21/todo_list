@@ -241,7 +241,7 @@ export function TodosListTable() {
         },
         {
             accessorKey: "title",
-            header: "Title",
+            header: "title",
             cell: ({ row }) => (
                 <div className="capitalize">{row.getValue("title")}</div>
             ),
@@ -273,7 +273,7 @@ export function TodosListTable() {
                         className="align-left ml-0 pl-0"
                         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     >
-                        createdAt
+                        created at
                         <ArrowUpDown />
                     </Button>
                 )
@@ -289,7 +289,7 @@ export function TodosListTable() {
                         variant="ghost"
                         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     >
-                        dueDate
+                        due date
                         <ArrowUpDown />
                     </Button>
                 )
