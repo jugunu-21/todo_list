@@ -205,8 +205,8 @@ export function CardWithForm({ sheetOpen, setSheetOpen }: { sheetOpen?: boolean,
         </Card>
         <Card className=" mt-2">
 
-            <CardContent className="">
-                <div className=" m-2">
+            <CardContent className="h-full p-6">
+                <div className=" m-2 h-full">
                     <div className=" flex justify-start">
                         <SiComma className=" transform scale-x-[-1] text-xl text-amber-600 " />
                         <SiComma className=" text-xl transform scale-x-[-1]  text-amber-600" /></div>
