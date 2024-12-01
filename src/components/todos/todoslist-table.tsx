@@ -538,10 +538,10 @@ export function TodosListTable() {
                                 />}
                         </AlertDialogDescription>
                     </AlertDialogHeader>
-                    {/* <AlertDialogFooter>
+                    <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction>Continue</AlertDialogAction>
-                    </AlertDialogFooter> */}
+                        {/* <AlertDialogAction>Continue</AlertDialogAction> */}
+                    </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
 

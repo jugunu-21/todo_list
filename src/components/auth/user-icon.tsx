@@ -80,7 +80,7 @@ export const UserIcon = () => {
             <DropdownMenuContent align="end" className=''>
                 <DropdownMenuLabel>{capitalizedUsername}</DropdownMenuLabel>
                 <DropdownMenuItem
-                    className='mx-2 bg-[#A984A5] hover:bg-[#9a5c93] focus:bg-[#A984A5] '
+                    className='mx-2 bg-red-300 hover:bg-red-400 focus:bg-red-500'
                     onClick={() => {
                         navigate("/signin")
                         removeSessionUser()
