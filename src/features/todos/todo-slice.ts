@@ -52,7 +52,6 @@ export const todoSlice = createSlice({
         },
         filterTodosReducer: (state, action: PayloadAction<string[]>) => {
             if (state.value) {
-
                 const filterArray = action.payload;
                 if (filterArray.length === 0) {
                     state.value = initialState.value; // Reset to initial state
@@ -66,13 +65,19 @@ export const todoSlice = createSlice({
                             case 'completed':
                                 return todo.status === 'completed';
                             case 'low':
+                                return todo.priority === 'low';
                             case 'medium':
+                                return todo.priority === 'medium';
                             case 'high':
-                                return todo.priority === filter;
+                                return todo.priority === "high";
                             case 'work':
+                                return todo.category === 'work';
                             case 'personal':
+                                return todo.category === 'personal';
                             case 'home':
-                                return todo.category === filter;
+                                return todo.category === 'home';
+                            case 'all':
+                                return todos;
                             default:
                                 return false; // Ignore unrecognized filters
                         }

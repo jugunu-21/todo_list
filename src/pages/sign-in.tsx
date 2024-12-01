@@ -6,12 +6,14 @@ import { useCurrentUser } from '../helpers/zustand';
 import { setUser, checkUser } from '../helpers/user/set-users';
 import setSessionUser from '../helpers/session-user/set-session-user';
 import { Button } from '../components/ui/button';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 export default function SignIn() {
     const navigate = useNavigate();
     const { setCurrentUser } = useCurrentUser();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
+    const data = useSelector((state: RootState) => state.todo.value)
     const handleSignInSubmit = async (e: React.FormEvent) => {
         try {
             e.preventDefault();

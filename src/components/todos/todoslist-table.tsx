@@ -104,7 +104,6 @@ const filters: FilterType[] = [
 export function TodosListTable() {
     const [shouldRerender, setShouldRerender] = useState(false)
     const data = useSelector((state: RootState) => state.todo.value)
-    const hasReloaded = useRef(false)
 
     // useEffect(() => {
     //     if (!data || data.length === 0) {
@@ -507,7 +506,7 @@ export function TodosListTable() {
                             </div>
                         </div></>
                     ) : (
-                        <>There is no data tasks available ... </>
+                        <>There is no  tasks available ... </>
                     )}
                 </div>
             </CardContent>
