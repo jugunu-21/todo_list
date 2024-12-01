@@ -2,6 +2,7 @@ import * as React from "react";
 import { useDispatch } from "react-redux";
 import { addTodo } from "../../features/todos/todo-slice";
 import { Button } from "../../components/ui/button";
+import { FaLongArrowAltUp } from "react-icons/fa";
 import {
     Card,
     CardContent,
@@ -25,7 +26,9 @@ import { ITodoAddstring, ITodoCategory, ITodoPriority } from "@/type/todo";
 import toast from "react-hot-toast";
 import { SiComma } from "react-icons/si";
 import { useEffect, useState } from "react";
-
+import { FaHome } from "react-icons/fa";
+import { MdOutlineSelfImprovement } from "react-icons/md";
+import { MdLocalPostOffice } from "react-icons/md";
 export function CardWithForm({ sheetOpen, setSheetOpen }: { sheetOpen?: boolean, setSheetOpen?: ((n: boolean) => void) }) {
 
 
@@ -140,9 +143,27 @@ export function CardWithForm({ sheetOpen, setSheetOpen }: { sheetOpen?: boolean,
                                     <SelectValue placeholder="Select a category" />
                                 </SelectTrigger>
                                 <SelectContent position="popper">
-                                    <SelectItem value="work">work</SelectItem>
-                                    <SelectItem value="personal">personal</SelectItem>
-                                    <SelectItem value="home">home</SelectItem>
+                                    <SelectItem value="work">
+                                        <div className="flex gap-1 justify-center items-center">
+                                            <MdLocalPostOffice />
+                                            <div>work </div>
+                                        </div>
+                                    </SelectItem>
+                                    <SelectItem value="personal">
+                                        <div className="flex gap-1 justify-center items-center">
+                                            <MdOutlineSelfImprovement />
+                                            <div>personal</div>
+
+                                        </div>
+
+
+                                    </SelectItem>
+                                    <SelectItem value="home">
+                                        <div className="flex gap-1 justify-center items-center">
+                                            <FaHome /> <div>home</div>
+                                        </div>
+
+                                    </SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
@@ -156,9 +177,22 @@ export function CardWithForm({ sheetOpen, setSheetOpen }: { sheetOpen?: boolean,
                                     <SelectValue placeholder="Select a priority" />
                                 </SelectTrigger>
                                 <SelectContent position="popper">
-                                    <SelectItem value="low">low</SelectItem>
-                                    <SelectItem value="medium">medium</SelectItem>
-                                    <SelectItem value="high">high</SelectItem>
+                                    <SelectItem value="low">
+                                        <div className="flex gap-1 justify-center items-center">
+                                            <FaLongArrowAltUp className="text-yellow-400" /> <div>low</div>
+                                        </div>
+
+                                    </SelectItem>
+                                    <SelectItem value="medium">
+
+                                        <div className="flex gap-1 justify-center items-center">
+                                            <FaLongArrowAltUp className="text-orange-500" /> <div>medium</div>
+                                        </div>
+                                    </SelectItem>
+                                    <SelectItem value="high">
+                                        <div className="flex gap-1 justify-center items-center">
+                                            <FaLongArrowAltUp className="text-red-700" /> <div>high</div>
+                                        </div></SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
