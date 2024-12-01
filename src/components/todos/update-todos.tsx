@@ -79,7 +79,7 @@ export function Updatecard({ todos, sheetOpen, setSheetOpen }: { todos: ITodos, 
     };
 
     return (
-        <Card className="">
+        <Card className=" ">
             <CardHeader>
                 <CardTitle>Update Todos</CardTitle>
             </CardHeader>

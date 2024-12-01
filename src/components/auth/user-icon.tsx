@@ -85,7 +85,7 @@ export const UserIcon = () => {
                         return
                     }}
                 >
-                    <Button variant={"destructive"} className=''>LogOut</Button>
+                    <Button variant={"destructive"} className='bg-red-300'>LogOut</Button>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
 

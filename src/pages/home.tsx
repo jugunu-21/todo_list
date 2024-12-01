@@ -22,7 +22,7 @@ const Home: React.FC = () => {
     const naviaget = useNavigate()
     const [sheetOpen, setSheetOpen] = useState<boolean>(false)
 
-    return (<main className="grid max-h[90vh] ">
+    return (<main className="grid h[90vh] m-2 ">
         <div className="flex w-full  items-center justify-between p-3">
             <Button className='px-2 py-1 md:hidden' onClick={() => setSheetOpen(prev => !prev)}>Create Todos<IoIosAddCircleOutline /></Button>
             <div className='sm:text-2xl font-semibold'>
