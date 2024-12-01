@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CardWithForm } from '../components/todos/add-todos-form'
 import { useNavigate } from 'react-router-dom';
 import { Button } from "../components/ui/button"
@@ -14,11 +14,32 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "../components/ui/sheet"
+import { getDataaction } from "./../features/todos/todo-slice"
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { TodosListTable } from '../components/todos/todoslist-table';
 import { UserIcon } from '../components/auth/user-icon';
-
+import { useDispatch } from 'react-redux';
+import getTodos from '../helpers/todos/get-todos';
+import { TODOS_KEY, SESSION_USERS_KEY } from "./../helpers/storage-keys";
+import { IUser } from '@/type/auth';
+import { useCurrentUser } from '../helpers/zustand';
 const Home: React.FC = () => {
+
+
+    const dispatch = useDispatch();
+    const { setCurrentUserwithoutprops } = useCurrentUser()
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            const timer = setTimeout(() => {
+            }, 2000);
+            setCurrentUserwithoutprops()
+            dispatch(getDataaction());
+            console.log("render")
+        }, 2000);
+
+        return () => clearTimeout(timeoutId);
+    }, []);
     const naviaget = useNavigate()
     const [sheetOpen, setSheetOpen] = useState<boolean>(false)
 

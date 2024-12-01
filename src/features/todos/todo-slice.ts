@@ -12,6 +12,10 @@ export const todoSlice = createSlice({
     name: 'todos',
     initialState,
     reducers: {
+        getDataaction: (state,) => {
+            const todos: ITodos[] = getTodos()
+            state.value = todos
+        },
         addTodo: (state, action: PayloadAction<ITodoAddstring>) => {
             const newTodo: ITodos = {
                 key: Date.now().toString(),
@@ -96,6 +100,6 @@ export const todoSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { addTodo, removeTodo, updateTodo, filterTodosReducer } = todoSlice.actions
+export const { getDataaction, addTodo, removeTodo, updateTodo, filterTodosReducer } = todoSlice.actions
 
 export default todoSlice.reducer

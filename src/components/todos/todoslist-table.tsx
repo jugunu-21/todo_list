@@ -98,6 +98,18 @@ const filters: FilterType[] = [
 ];
 
 export function TodosListTable() {
+    const [message, setMessage] = useState('Loading...');
+
+
+
+    useEffect(() => {
+        const timerId = setTimeout(() => {
+            setMessage('There is no task available '); // Replace 'Welcome!' with your desired message
+        }, 2000);
+
+        return () => clearTimeout(timerId);
+    }, []);
+
     const [shouldRerender, setShouldRerender] = useState(false)
     const data = useSelector((state: RootState) => state.todo.value)
 
@@ -505,8 +517,8 @@ export function TodosListTable() {
                                 </Button>
                             </div>
                         </div></>
-                    ) : (
-                        <>There is no  tasks available ... </>
+                    ) : (<>{message} </>
+
                     )}
                 </div>
             </CardContent>
@@ -539,3 +551,4 @@ export function TodosListTable() {
 
     )
 }
+
