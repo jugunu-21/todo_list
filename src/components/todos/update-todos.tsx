@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTodo, updateTodo } from "../../features/todos/todo-slice";
+import { updateTodo } from "../../features/todos/todo-slice";
 import { Button } from "../../components/ui/button";
 import {
     Card,

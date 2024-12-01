@@ -92,13 +92,8 @@ interface FilterType {
 const filters: FilterType[] = [
     { value: 'all', label: 'All Tasks' },
     { value: 'completed', label: 'Completed Tasks' },
-    { value: 'todo', label: 'uncompleted Tasks' },
-    { value: 'high', label: 'High Priority' },
-    { value: 'medium', label: 'Medium Priority' },
-    { value: 'low', label: 'Low Priority' },
-    { value: 'work', label: 'Work task' },
-    { value: 'personal', label: 'personal task' },
-    { value: 'home', label: 'home task' },
+    { value: 'todo', label: 'Pending Tasks' },
+
 ];
 
 export function TodosListTable() {
@@ -355,6 +350,7 @@ export function TodosListTable() {
 
         setCheckedFilters(newFilters);
         console.log("Updated filters:", newFilters);
+        return newFilters
     };
     return (
         <Card className="h-full">
@@ -383,16 +379,17 @@ export function TodosListTable() {
                                                 key={filter.value}
 
                                                 checked={checkedFilters.includes(filter.value)}
-                                                onClick={() => {
-                                                    updatetodosReducer(filterTodosReducer(checkedFilters))
-                                                }}
                                                 onCheckedChange={(value) => {
 
                                                     toggleFilter(filter.value);
 
                                                 }
-
                                                 }
+                                                onClick={() => {
+                                                    updatetodosReducer(filterTodosReducer(toggleFilter(filter.value)))
+                                                }}
+
+
                                             >
                                                 {filter.label}
                                             </DropdownMenuCheckboxItem>
