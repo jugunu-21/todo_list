@@ -48,7 +48,7 @@ import {
 } from "../../components/ui/card";
 import { useDispatch, useSelector, UseSelector } from "react-redux"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select'
-import { filterValues, ITodoCategory, ITodos, ITodoStatus } from '../../type/todo'
+import { filterValues, ITodoCategory, ITodos, ITodoStatus, ITodoPriority } from '../../type/todo'
 import { addTodo, removeTodo, updateTodo, filterTodosReducer } from "../../features/todos/todo-slice"
 import { UseDispatch } from 'react-redux'
 import { Input } from "../../components/ui/input"
@@ -152,6 +152,33 @@ export function TodosListTable() {
         []
     )
 
+
+    // Mapping function to get color variants based on value
+    const getBadgeVariant = (value: ITodoStatus | ITodoCategory | ITodoPriority): string => {
+        switch (value) {
+            case 'todo':
+                return 'bg-orange-500 hover:bg-orange-500'; // Tailwind class for blue text
+            case 'completed':
+                return '    bg-green-500   hover:bg-green-500 '; // Tailwind class for green text
+            case 'work':
+                return '    bg-purple-500  hover:bg-purple-500    '; // Tailwind class for purple text
+            case 'personal':
+                return '    bg-pink-500  hover:bg-pink-500    '; // Tailwind class for pink text
+            case 'home':
+                return '    bg-teal-500  hover:bg-teal-500    '; // Tailwind class for teal text
+            case 'low':
+                return '    bg-gray-500 hover:bg-gray-500     '; // Tailwind class for gray text
+            case 'medium':
+                return '    bg-yellow-500  hover:bg-yellow-500     '; // Tailwind class for yellow text
+            case 'high':
+                return '    bg-red-500  hover:bg--red-500    '; // Tailwind class for red text
+            default:
+                return '    bg-gray-700  hover:bg-gray-700    '; // Default text color
+        }
+    };
+
+
+
     const [updateOpen, setUpdateOpen] = useState<boolean>(false)
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({})
@@ -208,7 +235,9 @@ export function TodosListTable() {
                     </Button>
                 )
             },
-            cell: ({ row }) => <Badge className="lowercase ml-4" variant="secondary">{row.getValue("status")}</Badge>
+            cell: ({ row }) => <Badge className={`lowercase ${getBadgeVariant(row.getValue("status"))}`}>
+                {row.getValue("status")}
+            </Badge>
         },
         {
             accessorKey: "title",
@@ -231,7 +260,9 @@ export function TodosListTable() {
                     </Button>
                 )
             },
-            cell: ({ row }) => <Badge variant="secondary">{row.getValue("priority")}</Badge>,
+            cell: ({ row }) => <Badge className={`lowercase ${getBadgeVariant(row.getValue("priority"))}`}>
+                {row.getValue("priority")}
+            </Badge>
         },
         {
             accessorKey: "createdAt",
@@ -281,7 +312,10 @@ export function TodosListTable() {
                 )
             },
             cell: ({ row }) =>
-                <Badge className="lowercase" variant="secondary">{row.getValue("category")}</Badge>
+                <Badge className={`lowercase ${getBadgeVariant(row.getValue("category"))}`}>
+                    {row.getValue("category")}
+                </Badge>
+
 
         },
         {

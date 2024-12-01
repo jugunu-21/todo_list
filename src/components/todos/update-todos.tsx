@@ -44,12 +44,10 @@ export function Updatecard({ todos, sheetOpen, setSheetOpen }: { todos: ITodos, 
             toast.error("Due date is required");
             return;
         }
-
         if (!description) {
             toast.error("Description is required");
             return;
         }
-
         if (!category) {
             toast.error("Category is required");
             return;
@@ -58,7 +56,6 @@ export function Updatecard({ todos, sheetOpen, setSheetOpen }: { todos: ITodos, 
             toast.error("priority is required");
             return;
         }
-
         dispatch(updateTodo({
             dueDate: dueDate.toISOString(),
             title,
@@ -67,17 +64,13 @@ export function Updatecard({ todos, sheetOpen, setSheetOpen }: { todos: ITodos, 
             priority, // Adjust if ITodoCategory has different properties
             key: todos.key,
             status: todos.status
-
-
         }));
         setSheetOpen(false)
         setTitle('');
         setDescription('');
         setPriority('low');
         setDueDate(new Date());
-
     };
-
     return (
         <Card className=" ">
             <CardHeader>
