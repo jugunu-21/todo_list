@@ -81,9 +81,9 @@ export function Updatecard({ todos, sheetOpen, setSheetOpen }: { todos: ITodos, 
     return (
         <Card className="">
             <CardHeader>
-                <CardTitle>Create Todos</CardTitle>
+                <CardTitle>Update Todos</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className=" grid">
                 <form onSubmit={(e) => {
                     e.preventDefault();
                     handleSubmituUpdate();
