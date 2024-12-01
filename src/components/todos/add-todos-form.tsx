@@ -110,7 +110,7 @@ export function CardWithForm({ sheetOpen, setSheetOpen }: { sheetOpen?: boolean,
                     e.preventDefault();
                     handleSubmit();
                 }}>
-                    <div className="grid w-full items-center gap-4">
+                    <div className="grid grid-cols-1  items-center gap-4">
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="title">Title</Label>
                             <Input
@@ -129,7 +129,7 @@ export function CardWithForm({ sheetOpen, setSheetOpen }: { sheetOpen?: boolean,
                                 onChange={(e) => setDescription(e.target.value)}
                             />
                         </div>
-                        <div className="flex flex-col space-y-1.5">
+                        <div className=" flex flex-col space-y-1.5">
                             <Label htmlFor="due_date">Due Date</Label>
                             <DatePicker dueDate={dueDate} setDueDate={setDueDate} />
                         </div>

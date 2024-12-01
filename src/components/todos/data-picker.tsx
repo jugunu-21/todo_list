@@ -29,7 +29,7 @@ export function DatePicker({ dueDate, setDueDate }: { dueDate: Date | undefined;
                 <Button
                     variant={"outline"}
                     className={cn(
-                        "w-[280px] justify-start text-left font-normal",
+                        " justify-start text-left font-normal",
                         !date && "text-muted-foreground"
                     )}
                 >
