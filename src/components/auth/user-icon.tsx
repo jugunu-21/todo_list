@@ -77,9 +77,10 @@ export const UserIcon = () => {
                     )}
                 </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className=''>
                 <DropdownMenuLabel>{capitalizedUsername}</DropdownMenuLabel>
                 <DropdownMenuItem
+                    className='mx-2 bg-[#A984A5] hover:bg-[#9a5c93] focus:bg-[#A984A5] '
                     onClick={() => {
                         navigate("/signin")
                         removeSessionUser()
@@ -87,7 +88,7 @@ export const UserIcon = () => {
                         return
                     }}
                 >
-                    <Button variant={"destructive"} >LogOut</Button>
+                    LogOut
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
 
