@@ -3,6 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateTodo } from "../../features/todos/todo-slice";
 import { Button } from "../../components/ui/button";
 import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "../../components/ui/alert-dialog"
+import {
     Card,
     CardContent,
     CardDescription,
@@ -139,7 +150,8 @@ export function Updatecard({ todos, sheetOpen, setSheetOpen }: { todos: ITodos, 
                     </div>
                 </form>
             </CardContent>
-            <CardFooter className="flex justify-end">
+            <CardFooter className="flex justify-end gap-1">
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <Button onClick={handleSubmituUpdate}>Update task </Button>
             </CardFooter>
         </Card>)

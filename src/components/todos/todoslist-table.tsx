@@ -573,7 +573,7 @@ export function TodosListTable() {
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+
                         {/* <AlertDialogAction>Continue</AlertDialogAction> */}
                     </AlertDialogFooter>
                 </AlertDialogContent>
