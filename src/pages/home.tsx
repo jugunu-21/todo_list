@@ -5,6 +5,12 @@ import { Button } from "../components/ui/button"
 import { Input } from "../components/ui/input"
 import { Label } from "../components/ui/label"
 import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "../components/ui/tooltip"
+import {
     Sheet,
     SheetClose,
     SheetContent,
@@ -14,7 +20,8 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "../components/ui/sheet"
-import { getDataaction } from "./../features/todos/todo-slice"
+import { MdOutlineNoteAdd } from "react-icons/md";
+import { getDataaction, addDummyTodos } from "./../features/todos/todo-slice"
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { TodosListTable } from '../components/todos/todoslist-table';
 import { UserIcon } from '../components/auth/user-icon';
@@ -40,6 +47,7 @@ const Home: React.FC = () => {
 
         return () => clearTimeout(timeoutId);
     }, []);
+
     const naviaget = useNavigate()
     const [sheetOpen, setSheetOpen] = useState<boolean>(false)
     return (<main className="grid container max-w-full min-h-[60vh]">
@@ -49,8 +57,25 @@ const Home: React.FC = () => {
                 <div>Todo-Blink</div>
                 <div className=' border-t-4  border-amber-500'></div>
             </div>
-            <div>
-                <UserIcon />
+            <div className='flex justify-end gap-1 '>
+                <div>
+                    <Button
+                        onClick={() => dispatch(addDummyTodos())}
+                        variant={"secondary"}
+                        className="flex relative  items-center gap-4 px-2.5 text-muted hover:text-foreground rounded-lg"
+                    >
+                        <MdOutlineNoteAdd className="h-5 w-5 text-foreground" />
+                        <span className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-black">
+                            Add Note
+                        </span>
+
+
+                    </Button>
+
+                </div>
+                <div>
+                    <UserIcon />
+                </div>
             </div>
         </div>
         <div className=' grid container max-w-full md:grid md:grid-cols-3  gap-1'>

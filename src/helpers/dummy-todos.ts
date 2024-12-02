@@ -1,6 +1,6 @@
-import { ITodos } from './../type/todo'
+import { ITodos } from '../type/todo'
 
-export const todos: ITodos[] = [
+export const dummytodos: ITodos[] = [
     {
         key: '1',
         title: 'Complete project report',

@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { ITodos, ITodosSlice, ITodoAdd, ITodoUpdate, ITodoRemove, ITodoAddstring, ITodoStatus, ITodoCategory, ITodoPriority, filterValues } from "./../../type/todo"
 import getTodos from '../../helpers/todos/get-todos'
 import setTodos from '../../helpers/todos/set-todos'
+import { dummytodos } from './../../helpers/dummy-todos'
 const todos: ITodos[] = getTodos()
 const initialState: ITodosSlice = {
     value: todos
@@ -12,9 +13,15 @@ export const todoSlice = createSlice({
     name: 'todos',
     initialState,
     reducers: {
-        getDataaction: (state,) => {
-            const todos: ITodos[] = getTodos()
+        addDummyTodos: (state,) => {
+            const todos: ITodos[] = dummytodos
             state.value = todos
+            setTodos(state.value)
+        },
+        getDataaction: (state,) => {
+            const dummytodos: ITodos[] = getTodos()
+            state.value = dummytodos
+            setTodos(state.value)
         },
         addTodo: (state, action: PayloadAction<ITodoAddstring>) => {
             const newTodo: ITodos = {
@@ -37,6 +44,7 @@ export const todoSlice = createSlice({
             setTodos(state.value)
             console.log("value", ...state.value);
         },
+
         updateTodo: (state, action: PayloadAction<ITodoUpdate>) => {
             const index = state.value.findIndex(todo => todo.key === action.payload.key)
             const updatedFields = {
@@ -100,6 +108,6 @@ export const todoSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { getDataaction, addTodo, removeTodo, updateTodo, filterTodosReducer } = todoSlice.actions
+export const { getDataaction, addDummyTodos, addTodo, removeTodo, updateTodo, filterTodosReducer } = todoSlice.actions
 
 export default todoSlice.reducer
