@@ -57,12 +57,14 @@ const Home: React.FC = () => {
                     <Button
                         onClick={() => dispatch(addDummyTodos())}
                         variant={"secondary"}
-                        className="flex relative  items-center gap-4 px-2.5 text-muted hover:text-foreground rounded-lg"
+                        className="flex  items-centerpx-2.5  hover:text-foreground rounded-lg"
                     >
-                        <MdOutlineNoteAdd className="h-5 w-5 text-foreground" />
-                        <span className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-black">
-                            Add Note
+                        <span className=" ">
+                            Add  dummy toods
                         </span>
+
+                        <MdOutlineNoteAdd className="h-5 w-5 text-foreground" />
+
 
 
                     </Button>
