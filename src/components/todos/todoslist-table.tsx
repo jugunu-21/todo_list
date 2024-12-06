@@ -71,12 +71,12 @@ const filters: FilterType[] = [
 ];
 
 export function TodosListTable() {
-    const [message, setMessage] = useState(false);
+    const [loading, setLoading] = useState(true);
 
 
     useEffect(() => {
         const timerId = setTimeout(() => {
-            setMessage(true); // Replace 'Welcome!' with your desired message
+            setLoading(false); // Replace 'Welcome!' with your desired message
         }, 2000);
 
         return () => clearTimeout(timerId);
@@ -406,18 +406,19 @@ export function TodosListTable() {
                                             colSpan={columns.length}
                                             className="h-24 text-center"
                                         >
-                                            {message ?
-                                                <DotLottieReact
-
-                                                    src="/nodocument.lottie"
-                                                    loop
-                                                    autoplay
-                                                />
-                                                :
+                                            {loading ?
                                                 <DotLottieReact
 
 
                                                     src="/LoadingAnimation - 1733473539097.lottie"
+                                                    loop
+                                                    autoplay
+                                                />
+                                                :
+
+
+                                                <DotLottieReact
+                                                    src="/nodocument.lottie"
                                                     loop
                                                     autoplay
                                                 />
