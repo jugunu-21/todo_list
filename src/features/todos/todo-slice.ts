@@ -8,7 +8,6 @@ const todos: ITodos[] = getTodos()
 const initialState: ITodosSlice = {
     value: todos
 }
-
 export const todoSlice = createSlice({
     name: 'todos',
     initialState,
@@ -65,42 +64,14 @@ export const todoSlice = createSlice({
         filterTodosReducer: (state, action: PayloadAction<string[]>) => {
             if (state.value) {
                 const selectedFilters = action.payload;
-                const initialTodos = initialState.value
+                const todos: ITodos[] = getTodos()
+                const initialTodos = todos;
                 if (selectedFilters.length === 0 || selectedFilters.includes('all')) {
                     state.value = initialTodos; // Reset to initial state
                     return;
                 }
-
                 state.value = initialTodos.filter((todo) => selectedFilters.includes(todo.status))
 
-                // state.value = state.value.filter(todo => {
-
-                //     return filterArray.some(filter => {
-                //         switch (filter) {
-                //             case 'todo':
-                //                 return todo.status === 'todo';
-                //             case 'completed':
-                //                 return todo.status === 'completed';
-                //             case 'low':
-                //                 return todo.priority === 'low';
-                //             case 'medium':
-                //                 return todo.priority === 'medium';
-                //             case 'high':
-                //                 return todo.priority === "high";
-                //             case 'work':
-                //                 return todo.category === 'work';
-                //             case 'personal':
-                //                 return todo.category === 'personal';
-                //             case 'home':
-                //                 return todo.category === 'home';
-                //             case 'all':
-                //                 return todos;
-                //             default:
-                //                 return false; // Ignore unrecognized filters
-                //         }
-                //     }
-                //     );
-                // });
             }
         }
 
