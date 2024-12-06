@@ -1,30 +1,19 @@
-export function formatDateTime(dateinstring: string) {
-    const date = new Date(dateinstring);
-    const now = new Date();
-    const tomorrow = new Date(now);
-    tomorrow.setDate(tomorrow.getDate() + 1);
 
-    const diff = tomorrow.getTime() - now.getTime();
 
-    if (diff < 86400000) { // Less than a day
-        return `${date.toLocaleString('en', { weekday: 'long' })} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')} ${date.getHours() < 12 ? 'am' : 'pm'}`;
-    } else {
-        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        return `${date.getDate().toString().padStart(2, '0')}${monthNames[date.getMonth()]} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')} ${date.getHours() < 12 ? 'am' : 'pm'}`;
-    }
+export function formatDate(date: Date): string {
+    const options: Intl.DateTimeFormatOptions = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+    };
+    return date.toLocaleDateString('en-US', options);
 }
-export function formatDate(dateinstring: string) {
-    const date = new Date(dateinstring);
-    const now = new Date();
-    const tomorrow = new Date(now);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-
-    const diff = tomorrow.getTime() - now.getTime();
-
-    if (diff < 86400000) { // Less than a day
-        return `${date.toLocaleString('en', { weekday: 'long' })}`;
-    } else {
-        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        return `${date.getDate().toString().padStart(2, '0')}${monthNames[date.getMonth()]}`;
+export function createDateFromISO(isoString: string): string {
+    try {
+        const date = new Date(isoString);
+        return formatDate(date);
+    } catch (error) {
+        console.error('Invalid ISO string:', isoString);
+        throw error;
     }
 }

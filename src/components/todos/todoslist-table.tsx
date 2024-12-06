@@ -1,18 +1,7 @@
 
 import * as React from "react"
-import { HeaderButton } from './header-chip'
 import { RootState } from "../../redux/store"
-
-import { formatDate, formatDateTime } from "../../helpers/date-formator"
-import { useEffect, useMemo, useRef } from 'react'
-import { Label } from "../ui/label"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "../ui/popover"
-
-
+import { useEffect, } from 'react'
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -41,17 +30,12 @@ import {
 import {
     Card,
     CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
 } from "../../components/ui/card";
-import { useDispatch, useSelector, UseSelector } from "react-redux"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select'
-import { filterValues, ITodoCategory, ITodos, ITodoStatus, ITodoPriority } from '../../type/todo'
-import { addTodo, removeTodo, updateTodo, filterTodosReducer } from "../../features/todos/todo-slice"
-import { UseDispatch } from 'react-redux'
+import { useDispatch, useSelector, } from "react-redux"
+import { ITodoCategory, ITodos, ITodoStatus, ITodoPriority } from '../../type/todo'
+import { removeTodo, updateTodo, filterTodosReducer } from "../../features/todos/todo-slice"
 import { Input } from "../../components/ui/input"
+
 import {
     Table,
     TableBody,
@@ -61,22 +45,8 @@ import {
     TableRow,
 } from "../../components/ui/table"
 import { useState } from "react"
-import { filterAndSortTodos } from "../../helpers/todos/todos-filters-arrangement"
-import {
-    Sheet,
-    SheetClose,
-    SheetContent,
-    SheetDescription,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from "../../components/ui/sheet"
-
 import {
     AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
     AlertDialogFooter,
@@ -86,6 +56,8 @@ import {
 } from "../../components/ui/alert-dialog"
 import { Updatecard } from "./update-todos"
 import { Badge } from "../ui/badge"
+import { createDateFromISO } from "../../helpers/date-formator"
+import { getBadgeVariant } from "../../helpers/get-badges-varient"
 interface FilterType {
     value: string;
     label: string;
@@ -99,9 +71,6 @@ const filters: FilterType[] = [
 
 export function TodosListTable() {
     const [message, setMessage] = useState('Loading...');
-
-
-
     useEffect(() => {
         const timerId = setTimeout(() => {
             setMessage('There is no task available '); // Replace 'Welcome!' with your desired message
@@ -109,81 +78,20 @@ export function TodosListTable() {
 
         return () => clearTimeout(timerId);
     }, []);
-
-    const [shouldRerender, setShouldRerender] = useState(false)
+    // const [data, setData] = useState<ITodos[]>([])
     const data = useSelector((state: RootState) => state.todo.value)
-
-    // useEffect(() => {
-    //     if (!data || data.length === 0) {
-    //         if (!hasReloaded.current) {
-    //             hasReloaded.current = true
-    //             window.location.reload()
-    //         }
-    //     } else {
-    //         hasReloaded.current = false // Reset the flag if data becomes available
-    //     }
-    // }, [data])
-
-
+    // setData(newdata)
+    console.log("data", data)
     const [checkedFilters, setCheckedFilters] = useState<string[]>(["all"]);
-    function formatDate(date: Date): string {
-        const options: Intl.DateTimeFormatOptions = {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-        };
-        return date.toLocaleDateString('en-US', options);
-    }
-    function createDateFromISO(isoString: string): string {
-        try {
-            const date = new Date(isoString);
-            return formatDate(date);
-        } catch (error) {
-            console.error('Invalid ISO string:', isoString);
-            throw error;
-        }
-    }
     const [toDo, setTodo] = useState<ITodos>()
     const updatetodosReducer = useDispatch()
-
-    console.log("filteredData ", data)
     const [sorting, setSorting] = React.useState<SortingState>([])
-    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-        []
-    )
-
-
-    // Mapping function to get color variants based on value
-    const getBadgeVariant = (value: ITodoStatus | ITodoCategory | ITodoPriority): string => {
-        switch (value) {
-            case 'todo':
-                return 'bg-orange-500 hover:bg-orange-500'; // Tailwind class for blue text
-            case 'completed':
-                return '    bg-green-500   hover:bg-green-500 '; // Tailwind class for green text
-            case 'work':
-                return '    bg-purple-500  hover:bg-purple-500    '; // Tailwind class for purple text
-            case 'personal':
-                return '    bg-pink-500  hover:bg-pink-500    '; // Tailwind class for pink text
-            case 'home':
-                return '    bg-teal-500  hover:bg-teal-500    '; // Tailwind class for teal text
-            case 'low':
-                return '    bg-gray-500 hover:bg-gray-500     '; // Tailwind class for gray text
-            case 'medium':
-                return '    bg-yellow-500  hover:bg-yellow-500     '; // Tailwind class for yellow text
-            case 'high':
-                return '    bg-red-500  hover:bg--red-500    '; // Tailwind class for red text
-            default:
-                return '    bg-gray-700  hover:bg-gray-700    '; // Default text color
-        }
-    };
-
-
-
+    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [updateOpen, setUpdateOpen] = useState<boolean>(false)
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
-    const columns: ColumnDef<ITodos>[] = [
+    const columns: ColumnDef<ITodos>[] | [] = [
         {
             id: "select",
             // header: ({ table }) => (
@@ -315,8 +223,6 @@ export function TodosListTable() {
                 <Badge className={`lowercase ${getBadgeVariant(row.getValue("category"))}`}>
                     {row.getValue("category")}
                 </Badge>
-
-
         },
         {
             id: "actions",
@@ -345,23 +251,6 @@ export function TodosListTable() {
                             }}>
                                 Update
                             </DropdownMenuItem>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         </DropdownMenuContent>
                     </DropdownMenu >
                 )
@@ -396,7 +285,6 @@ export function TodosListTable() {
             // Add the filter if it doesn't exist
             newFilters.push(filterValue);
         }
-
         setCheckedFilters(newFilters);
         console.log("Updated filters:", newFilters);
         return newFilters
@@ -437,8 +325,6 @@ export function TodosListTable() {
                                                 onClick={() => {
                                                     updatetodosReducer(filterTodosReducer(toggleFilter(filter.value)))
                                                 }}
-
-
                                             >
                                                 {filter.label}
                                             </DropdownMenuCheckboxItem>
@@ -473,93 +359,85 @@ export function TodosListTable() {
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </div>
-
                     </div>
-                    {data != null ? (<>
-                        <div className="rounded-md border">
-                            <Table>
-                                <TableHeader>
-                                    {table.getHeaderGroups().map((headerGroup) => (
-                                        <TableRow key={headerGroup.id}>
-                                            {headerGroup.headers.map((header) => {
-                                                return (
-                                                    <TableHead key={header.id}>
-                                                        {header.isPlaceholder
-                                                            ? null
-                                                            : flexRender(
-                                                                header.column.columnDef.header,
-                                                                header.getContext()
-                                                            )}
-                                                    </TableHead>
-                                                )
-                                            })}
-                                        </TableRow>
-                                    ))}
-                                </TableHeader>
-                                <TableBody>
-                                    {table.getRowModel().rows?.length ? (
-                                        table.getRowModel().rows.map((row) => (
-                                            <TableRow
-                                                key={row.id}
-                                                data-state={row.getIsSelected() && "selected"}
-                                            >
-                                                {row.getVisibleCells().map((cell) => (
-                                                    <TableCell key={cell.id}>
-                                                        {flexRender(
-                                                            cell.column.columnDef.cell,
-                                                            cell.getContext()
+                    {/* {data != null ? (<> */}
+                    <div className="rounded-md border">
+                        <Table>
+                            <TableHeader>
+                                {table.getHeaderGroups().map((headerGroup) => (
+                                    <TableRow key={headerGroup.id}>
+                                        {headerGroup.headers.map((header) => {
+                                            return (
+                                                <TableHead key={header.id}>
+                                                    {header.isPlaceholder
+                                                        ? null
+                                                        : flexRender(
+                                                            header.column.columnDef.header,
+                                                            header.getContext()
                                                         )}
-                                                    </TableCell>
-                                                ))}
-                                            </TableRow>
-                                        ))
-                                    ) : (
-                                        <TableRow>
-                                            <TableCell
-                                                colSpan={columns.length}
-                                                className="h-24 text-center"
-                                            >
-                                                No results.
-                                            </TableCell>
+                                                </TableHead>
+                                            )
+                                        })}
+                                    </TableRow>
+                                ))}
+                            </TableHeader>
+                            <TableBody>
+                                {table.getRowModel().rows?.length ? (
+                                    table.getRowModel().rows.map((row) => (
+                                        <TableRow
+                                            key={row.id}
+                                            data-state={row.getIsSelected() && "selected"}
+                                        >
+                                            {row.getVisibleCells().map((cell) => (
+                                                <TableCell key={cell.id}>
+                                                    {flexRender(
+                                                        cell.column.columnDef.cell,
+                                                        cell.getContext()
+                                                    )}
+                                                </TableCell>
+                                            ))}
                                         </TableRow>
-                                    )}
-                                </TableBody>
-                            </Table>
+                                    ))
+                                ) : (
+                                    <TableRow>
+                                        <TableCell
+                                            colSpan={columns.length}
+                                            className="h-24 text-center"
+                                        >
+                                            No results.
+                                        </TableCell>
+                                    </TableRow>
+                                )}
+                            </TableBody>
+                        </Table>
+                    </div>
+                    <div className="flex items-center justify-end space-x-2 pt-2 pb-0">
+                        <div className="space-x-2">
+                            <Button
+
+                                variant="outline"
+                                size="sm"
+                                onClick={() => table.previousPage()}
+                                disabled={!table.getCanPreviousPage()}
+                            >
+                                Previous
+                            </Button>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => table.nextPage()}
+                                disabled={!table.getCanNextPage()}
+                            >
+                                Next
+                            </Button>
                         </div>
-                        <div className="flex items-center justify-end space-x-2 pt-2 pb-0">
-                            {/* <div className="flex-1 text-sm text-muted-foreground">
-                            {table.getFilteredSelectedRowModel().rows.length} of{" "}
-                            {table.getFilteredRowModel().rows.length} row(s) selected.
-                        </div> */}
-                            <div className="space-x-2">
-                                <Button
-
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => table.previousPage()}
-                                    disabled={!table.getCanPreviousPage()}
-                                >
-                                    Previous
-                                </Button>
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => table.nextPage()}
-                                    disabled={!table.getCanNextPage()}
-                                >
-                                    Next
-                                </Button>
-                            </div>
-                        </div></>
+                    </div>
+                    {/* </>
                     ) : (<>{message} </>
-
-                    )}
+                    )} */}
                 </div>
             </CardContent>
-
-
             <AlertDialog open={updateOpen} onOpenChange={setUpdateOpen}>
-
                 <AlertDialogContent >
                     <AlertDialogHeader>
                         <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
@@ -573,16 +451,10 @@ export function TodosListTable() {
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-
-                        {/* <AlertDialogAction>Continue</AlertDialogAction> */}
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
-
-
-
         </Card >
-
     )
 }
 
