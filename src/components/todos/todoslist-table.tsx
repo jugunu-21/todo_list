@@ -1,3 +1,4 @@
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 import * as React from "react"
 import { RootState } from "../../redux/store"
@@ -70,10 +71,12 @@ const filters: FilterType[] = [
 ];
 
 export function TodosListTable() {
-    const [message, setMessage] = useState('Loading...');
+    const [message, setMessage] = useState(false);
+
+
     useEffect(() => {
         const timerId = setTimeout(() => {
-            setMessage('There is no task available '); // Replace 'Welcome!' with your desired message
+            setMessage(true); // Replace 'Welcome!' with your desired message
         }, 2000);
 
         return () => clearTimeout(timerId);
@@ -360,7 +363,6 @@ export function TodosListTable() {
                             </DropdownMenu>
                         </div>
                     </div>
-                    {/* {data != null ? (<> */}
                     <div className="rounded-md border">
                         <Table>
                             <TableHeader>
@@ -404,7 +406,22 @@ export function TodosListTable() {
                                             colSpan={columns.length}
                                             className="h-24 text-center"
                                         >
-                                            No results.
+                                            {message ?
+                                                <DotLottieReact
+
+                                                    src="/nodocument.lottie"
+                                                    loop
+                                                    autoplay
+                                                />
+                                                :
+                                                <DotLottieReact
+
+
+                                                    src="/LoadingAnimation - 1733473539097.lottie"
+                                                    loop
+                                                    autoplay
+                                                />
+                                            }
                                         </TableCell>
                                     </TableRow>
                                 )}
@@ -432,9 +449,7 @@ export function TodosListTable() {
                             </Button>
                         </div>
                     </div>
-                    {/* </>
-                    ) : (<>{message} </>
-                    )} */}
+
                 </div>
             </CardContent>
             <AlertDialog open={updateOpen} onOpenChange={setUpdateOpen}>
